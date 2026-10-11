@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import importlib
+import inspect
 import json
 import logging
 import sys
@@ -82,8 +83,14 @@ def actualizar_tribunal(tid: str, anios: list[int], estado: dict) -> dict:
             continue
         if i and pausa_anios:
             time.sleep(pausa_anios)
+        antiguos_anio = [k for k, r in por_clave.items() if anio_de(r["n"]) == anio]
+        acepta_omitir = "omitir" in inspect.signature(mod.listar).parameters
         try:
-            nuevos = mod.listar(anio, sesion) if sesion is not None else mod.listar(anio)
+            if acepta_omitir:
+                # Scrapers con ficha por registro: no reabren las fichas ya indexadas; sus campos se conservan abajo.
+                nuevos = mod.listar(anio, sesion, omitir=set(antiguos_anio))
+            else:
+                nuevos = mod.listar(anio, sesion) if sesion is not None else mod.listar(anio)
         except Exception as e:  # noqa: BLE001
             log.error("%s %d: %s", tid, anio, e)
             resumen["ok"] = False
@@ -91,7 +98,16 @@ def actualizar_tribunal(tid: str, anios: list[int], estado: dict) -> dict:
             resumen["anios"][str(anio)] = {"error": str(e)}
             continue
         nuevos_d = [r.limpio() for r in nuevos]
-        antiguos_anio = [k for k, r in por_clave.items() if anio_de(r["n"]) == anio]
+        if acepta_omitir:
+            fusionados = []
+            for r in nuevos_d:
+                k = f"{r['t']}|{r.get('k', 'resolucion')}|{r['n']}"
+                viejo = por_clave.get(k)
+                if viejo:
+                    # lo nuevo del listado manda, salvo el PDF (la ficha suele dar la URL directa) y los campos que el listado no trae
+                    r = {**viejo, **r, **({"pdf": viejo["pdf"]} if viejo.get("pdf") else {})}
+                fusionados.append(r)
+            nuevos_d = fusionados
         if antiguos_anio and len(nuevos_d) < UMBRAL_SOSPECHA * len(antiguos_anio):
             log.warning("%s %d: solo %d registros nuevos frente a %d guardados; se conservan los guardados",
                         tid, anio, len(nuevos_d), len(antiguos_anio))

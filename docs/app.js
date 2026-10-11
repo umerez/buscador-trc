@@ -303,14 +303,16 @@
     }).join("");
   }
 
-  function urlTACRC(rec, suf, res, fechaISO) {
-    const r = normalizarNumero(rec), s = normalizarNumero(res);
+  function urlTACRC(rec, suf, recCCAA, res, fechaISO) {
+    const r = normalizarNumero(rec), s = normalizarNumero(res), rc = normalizarNumero(recCCAA);
     if (!r || !r.num || !s || !s.num || !fechaISO) return null;
+    if (suf && !(rc && rc.num)) return null;
     const anioRec = r.anio || parseInt(fechaISO.slice(0, 4), 10);
     const anioRes = s.anio || anioRec;
     const recurso = String(r.num).padStart(4, "0") + "-" + anioRec;
     const fecha = fechaISO.slice(8, 10) + "-" + fechaISO.slice(5, 7) + "-" + fechaISO.slice(0, 4);
-    const sufijo = suf ? ` ${suf} ${String(r.num).padStart(3, "0")}-${anioRec}` : "";
+    // Ej.: «Recurso 0456-2018 CLM 31-2018 (Res 556) 08-06-2018.pdf»; el nº autonómico va sin ceros
+    const sufijo = suf ? ` ${suf} ${rc.num}-${rc.anio || anioRec}` : "";
     const nombre = `Recurso ${recurso}${sufijo} (Res ${s.num}) ${fecha}.pdf`;
     return `https://www.hacienda.gob.es/TACRC/Resoluciones/${encodeURIComponent("Año " + anioRes)}/${encodeURIComponent(nombre)}`;
   }
@@ -339,9 +341,9 @@
   }));
   $("#form-tacrc").addEventListener("submit", (e) => {
     e.preventDefault();
-    const url = urlTACRC($("#tacrc-rec").value, $("#tacrc-suf").value, $("#tacrc-res").value, $("#tacrc-fecha").value);
+    const url = urlTACRC($("#tacrc-rec").value, $("#tacrc-suf").value, $("#tacrc-recccaa").value, $("#tacrc-res").value, $("#tacrc-fecha").value);
     const p = $("#tacrc-url");
-    if (!url) { p.textContent = "Faltan datos: hacen falta el número de recurso, el de resolución y la fecha."; return; }
+    if (!url) { p.textContent = "Faltan datos: hacen falta el número de recurso, el de resolución y la fecha (y el número de recurso autonómico si hay sufijo de comunidad)."; return; }
     p.innerHTML = `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(decodeURIComponent(url))}</a><br><small>Si el enlace da error, el tribunal pudo usar otra variante del nombre (sufijo de comunidad, «corregida», año de dos cifras en 2014): búsquela en el buscador oficial.</small>`;
     window.open(url, "_blank", "noopener");
   });

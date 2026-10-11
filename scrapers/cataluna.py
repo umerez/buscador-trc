@@ -124,12 +124,20 @@ def _registro_de_articulo(art, anio: int) -> Optional[Registro]:
         or limpiar((ficha.get_text(" ") if ficha else art.get_text(" ")))
     if not titulo:
         return None
-    m = re.search(r"(Resoluci[oó]|Acord)\s+n[uú]m\.?\s*(\d{1,4}\s*/\s*\d{2,4})", titulo, re.I)
+    # Formas vistas: «núm. 352/2023», «núm. 222//2025», «núm. 359, de 29 d'octubre de 2020» (sin año),
+    # «núm. 1202020, de 12 de març» (número y año pegados).
+    m = re.search(r"(Resoluci[oó]|Acord)\s+n[uú]m\.?\s*:?\s*(\d{1,8})(?:\s*/+\s*(\d{2,4}))?", titulo, re.I)
     if not m:
         log.warning("título no reconocido: %r", titulo)
         return None
     k = "acuerdo" if m.group(1).lower().startswith("acord") else "resolucion"
-    n = numero(m.group(2), anio)
+    num, an = m.group(2), m.group(3)
+    if an is None and len(num) >= 5 and 2000 <= int(num[-4:]) <= 2100:
+        num, an = num[:-4], num[-4:]
+    if an is None:
+        ma = re.search(r"\bde\s+(\d{4})\s*$", titulo)
+        an = ma.group(1) if ma else str(anio)
+    n = numero(f"{num}/{an}")
 
     f = None
     for sp in art.find_all("span"):
@@ -164,6 +172,13 @@ def _listado(sesion: Sesion, anio: int) -> list[Registro]:
     soup = BeautifulSoup(html, "lxml")
     total = _contador(soup)
     arts = _articulos(soup)
+    if total is None and not arts:
+        # Con `rows` el servidor devuelve a veces su página de error genérica («La pàgina que demaneu no es
+        # troba al servidor»; visto en 2026 con cualquier valor de rows). Sin `rows` sí responde: se pagina.
+        log.info("%d: sin resultados con rows=%d; se reintenta sin rows", anio, ROWS_MAX)
+        soup = BeautifulSoup(_pagina_listado(sesion, anio), "lxml")
+        total = _contador(soup)
+        arts = _articulos(soup)
     if total == 0 or (total is None and not arts):
         return []
     if total is not None and len(arts) < total and total > ROWS_MAX:
@@ -172,13 +187,22 @@ def _listado(sesion: Sesion, anio: int) -> list[Registro]:
         arts = _articulos(soup)
     if total is not None and len(arts) < total:
         log.warning("%d: rows=%d devolvió %d de %d; paginando de %d en %d", anio, ROWS_MAX, len(arts), total, POR_PAGINA, POR_PAGINA)
+        # La paginación no es estable (el orden cambia entre peticiones y algunos artículos se repiten o se
+        # saltan), así que se dan hasta tres pasadas y se unen; la deduplicación de abajo quita los repetidos.
         arts = []
-        for pagina in range(1, math.ceil(total / POR_PAGINA) + 1):
-            soup = BeautifulSoup(_pagina_listado(sesion, anio, pagina=pagina), "lxml")
-            nuevos = _articulos(soup)
-            if not nuevos:
+        for pasada in range(1, 4):
+            for pagina in range(1, math.ceil(total / POR_PAGINA) + 1):
+                soup = BeautifulSoup(_pagina_listado(sesion, anio, pagina=pagina), "lxml")
+                nuevos = _articulos(soup)
+                if not nuevos:
+                    # alguna página intermedia llega vacía por capricho del servidor (2026, página 37): seguir
+                    log.debug("%d: página %d vacía", anio, pagina)
+                    continue
+                arts.extend(nuevos)
+            distintos = {a.find("a", href=True)["href"] for a in arts if a.find("a", href=True)}
+            if len(distintos) >= total:
                 break
-            arts.extend(nuevos)
+            log.info("%d: pasada %d de paginación, %d artículos distintos de %d", anio, pasada, len(distintos), total)
 
     registros: dict[str, Registro] = {}
     for art in arts:
@@ -257,7 +281,7 @@ def _completar_con_ficha(sesion: Sesion, reg: Registro) -> None:
 
 # ---------------------------------------------------------------- interfaz
 
-def listar(anio: int, sesion: Optional[Sesion] = None, fichas: bool = True) -> list[Registro]:
+def listar(anio: int, sesion: Optional[Sesion] = None, fichas: bool = True, omitir=None) -> list[Registro]:
     """Devuelve TODAS las resoluciones y acuerdos del año.
 
     ``fichas=True`` (por defecto) abre la ficha HTML de cada registro para rellenar r, o, s, c y a
@@ -267,7 +291,7 @@ def listar(anio: int, sesion: Optional[Sesion] = None, fichas: bool = True) -> l
     registros = _listado(sesion, anio)
     if fichas:
         for i, reg in enumerate(registros, 1):
-            if not reg.url:
+            if not reg.url or (omitir and reg.clave() in omitir):
                 continue
             try:
                 _completar_con_ficha(sesion, reg)

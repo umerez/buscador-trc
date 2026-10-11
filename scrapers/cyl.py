@@ -255,7 +255,7 @@ def _completar_con_ficha(reg: Registro, sesion: Sesion) -> None:
 
 # ---------------------------------------------------------------- interfaz
 
-def listar(anio: int, sesion: Optional[Sesion] = None, fichas: bool = True) -> list[Registro]:
+def listar(anio: int, sesion: Optional[Sesion] = None, fichas: bool = True, omitir=None) -> list[Registro]:
     """Devuelve TODAS las resoluciones del año (recorre la paginación del listado anual).
 
     Con `fichas=True` (por defecto) abre la ficha de cada resolución para rellenar f, r, s, o, a y c
@@ -277,6 +277,8 @@ def listar(anio: int, sesion: Optional[Sesion] = None, fichas: bool = True) -> l
         registros.append(reg)
     if fichas:
         for i, reg in enumerate(registros, 1):
+            if omitir and reg.clave() in omitir:   # ya indexada: el orquestador conserva sus campos de ficha
+                continue
             _completar_con_ficha(reg, sesion)
             if i % 25 == 0:
                 log.info("TARCCYL %d: %d/%d fichas", anio, i, len(registros))

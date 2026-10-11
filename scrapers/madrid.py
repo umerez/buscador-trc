@@ -244,7 +244,7 @@ def _completar(reg: Registro, ses: Sesion) -> bool:
 
 # ---------------------------------------------------------------- API
 
-def listar(anio: int, sesion: Optional[Sesion] = None, fichas: bool = True) -> List[Registro]:
+def listar(anio: int, sesion: Optional[Sesion] = None, fichas: bool = True, omitir=None) -> List[Registro]:
     """Devuelve TODAS las resoluciones del año (recorre la paginación de 5 en 5).
 
     Con `fichas=True` (por defecto) abre la ficha de cada resolución para completar recurso, sentido,
@@ -295,6 +295,8 @@ def listar(anio: int, sesion: Optional[Sesion] = None, fichas: bool = True) -> L
 
     if fichas:
         for i, reg in enumerate(registros, 1):
+            if omitir and reg.clave() in omitir:   # ya indexada: el orquestador conserva sus campos de ficha
+                continue
             _completar(reg, ses)
             if i % 50 == 0:
                 log.info("madrid %d: %d/%d fichas", anio, i, len(registros))
