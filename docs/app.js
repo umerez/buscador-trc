@@ -104,7 +104,9 @@
       lab.title = t.nombre + (t.ambito ? " · " + t.ambito : "");
       const sin = !t.fichero;
       if (sin) lab.classList.add("sin-datos");
-      lab.innerHTML = `<input type="checkbox" name="t" value="${t.id}" ${sin ? "disabled" : "checked"}> ${esc(t.siglas)} <small>${sin ? "sin índice" : t.total.toLocaleString("es-ES")}</small>`;
+      const nota = sin ? "sin índice" : t.total.toLocaleString("es-ES") + (t.parcial ? " · parcial" : "");
+      if (t.parcial) lab.title += " · " + t.parcial;
+      lab.innerHTML = `<input type="checkbox" name="t" value="${t.id}" ${sin ? "disabled" : "checked"}> ${esc(t.siglas)} <small>${nota}</small>`;
       fs.appendChild(lab);
     }
   }
@@ -212,9 +214,10 @@
     $("#resumen").textContent = n === 0 ? "Ninguna resolución coincide." : `${n.toLocaleString("es-ES")} resoluciones` + (hayFiltro ? "" : " (las más recientes primero)");
     pintarEnlacesOficiales(f);
     const aviso = $("#aviso-tacrc");
-    if (hayFiltro && (f.t.length === 0 || f.t.includes("tacrc") || document.querySelector('#tribunales input[value="tacrc"]'))) {
+    const parciales = estado.meta.tribunales.filter((t) => t.parcial && f.t.includes(t.id));
+    if (hayFiltro && parciales.length) {
       aviso.hidden = false;
-      aviso.innerHTML = "Las resoluciones del <strong>TACRC</strong> (y de las comunidades que tiene conveniadas) no están en este índice: su buscador exige una comprobación anti-robots. Use el enlace al buscador oficial o el constructor de enlaces al PDF, más abajo.";
+      aviso.innerHTML = parciales.map((t) => `<strong>${esc(t.siglas)}</strong>: ${esc(t.parcial)}`).join("<br>");
     } else aviso.hidden = true;
   }
 

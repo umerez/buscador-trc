@@ -264,7 +264,7 @@ def main(argv=None):
         return 0
 
     hoy = date.today()
-    ids = args.tribunal or [t for t in TRIBUNALES if t != "tacrc"]
+    ids = args.tribunal or list(TRIBUNALES)
     estado = leer_json(DATOS / "estado.json", {})
     fallos = 0
     for tid in ids:
@@ -277,7 +277,7 @@ def main(argv=None):
             desde = args.desde or hoy.year
             hasta = args.hasta or desde
             anios = list(range(desde, hasta + 1))
-        if not hasattr(mod, "listar") or tid == "tacrc":
+        if not hasattr(mod, "listar"):
             continue
         log.info("== %s: años %s", tid, anios)
         res = actualizar_tribunal(tid, anios, estado)

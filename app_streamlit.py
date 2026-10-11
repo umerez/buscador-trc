@@ -116,14 +116,17 @@ with st.sidebar:
         "públicos de cada tribunal y contiene solo metadatos: número, fecha, recurso, sentido, órgano, "
         "objeto y enlace al PDF oficial."
     )
-    if sin_indice:
-        for t in sin_indice:
-            st.warning(f"**{t['siglas']}**: {t.get('sin_indice', 'sin índice')} [Buscador oficial]({t['buscador']})")
+    for t in sin_indice:
+        st.warning(f"**{t['siglas']}**: {t.get('sin_indice', 'sin índice')} [Buscador oficial]({t['buscador']})")
+    for t in con_indice:
+        if t.get("parcial"):
+            st.warning(f"**{t['siglas']}** (índice parcial): {t['parcial']} [Buscador oficial]({t['buscador']})")
     st.markdown("---")
     st.markdown("**Tribunales**")
     seleccion = []
     for t in con_indice:
-        if st.checkbox(f"{t['siglas']} · {t['total']:,}".replace(",", "."), value=True, key=f"t_{t['id']}", help=t["nombre"]):
+        etiqueta = f"{t['siglas']} · {t['total']:,}".replace(",", ".") + (" (parcial)" if t.get("parcial") else "")
+        if st.checkbox(etiqueta, value=True, key=f"t_{t['id']}", help=t["nombre"]):
             seleccion.append(t["id"])
     st.markdown("---")
     st.caption(

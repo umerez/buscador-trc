@@ -1,6 +1,6 @@
 {
- "actualizado": "2026-10-11T07:32:55+00:00",
- "total": 28809,
+ "actualizado": "2026-10-11T16:36:54+00:00",
+ "total": 31201,
  "tribunales": [
   {
    "id": "tacrc",
@@ -11,10 +11,27 @@
    "idioma": "es",
    "desde": 2011,
    "documento": "Resolución",
-   "sin_indice": "El buscador oficial del TACRC exige una comprobación anti-robots (Cloudflare Turnstile) que impide indexar sus resoluciones. Busque directamente en la web del tribunal o construya el enlace al PDF si conoce el número de recurso, el de resolución y la fecha.",
-   "total": 0,
-   "anios": {},
-   "fichero": null
+   "parcial": "El buscador oficial del TACRC exige una comprobación anti-robots que impide indexarlo. Este índice solo contiene las resoluciones cuyos PDF conservan los archivos públicos de la web (Wayback Machine y Common Crawl): número, recurso, fecha y enlace, sin sentido ni objeto. Para el resto, use el buscador oficial o el constructor de enlaces al PDF.",
+   "total": 2392,
+   "anios": {
+    "2011": 115,
+    "2012": 265,
+    "2013": 225,
+    "2014": 540,
+    "2015": 184,
+    "2016": 99,
+    "2017": 111,
+    "2018": 110,
+    "2019": 133,
+    "2020": 111,
+    "2021": 134,
+    "2022": 122,
+    "2023": 111,
+    "2024": 77,
+    "2025": 37,
+    "2026": 18
+   },
+   "fichero": "data/tacrc.json"
   },
   {
    "id": "madrid",
