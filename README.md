@@ -81,3 +81,17 @@ Cada registro de `docs/data/<tribunal>.json` tiene estas claves (las vacías se 
 
 Código bajo licencia MIT. Los datos pertenecen a los tribunales que los publican y se reproducen aquí solo
 como índice de acceso a las fuentes oficiales.
+
+## Versión Streamlit
+
+`app_streamlit.py` es la misma herramienta como aplicación Streamlit, sobre el mismo índice `docs/data/`.
+Sirve para desplegarla en Streamlit Community Cloud (como la calculadora de plazos) y enlazarla desde umerez.eu.
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/streamlit run app_streamlit.py          # http://localhost:8501
+```
+
+En Streamlit Community Cloud: «New app» → repositorio `umerez/buscador-trc`, rama `main`, fichero `app_streamlit.py`.
+La aplicación relee el índice en cada despliegue; como el workflow nocturno hace commit de los JSON en el mismo
+repositorio, Streamlit Cloud redespliega sola con los datos nuevos.
