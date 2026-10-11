@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resoluciones contractuales</title>
+<meta name="description" content="Buscador unificado de las resoluciones de los tribunales y órganos de recursos contractuales de España: TACRC, Madrid, Castilla y León, Andalucía, Galicia, Navarra, Cataluña, Aragón, Euskadi y Canarias.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%96%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<header class="cabecera">
+  <div class="contenedor">
+    <h1>Buscador de resoluciones de los tribunales de recursos contractuales</h1>
+    <p class="sub" id="subtitulo">Cargando el índice…</p>
+  </div>
+</header>
+
+<main class="contenedor">
+  <form id="filtros" class="filtros" autocomplete="off">
+    <div class="fila">
+      <label class="campo crece">
+        <span>Texto libre</span>
+        <input type="search" id="q" placeholder="objeto del contrato, órgano, acto recurrido, palabras del resumen… (entre comillas para frase exacta)">
+      </label>
+    </div>
+    <div class="fila">
+      <label class="campo">
+        <span>Nº de resolución</span>
+        <input type="text" id="num" placeholder="400/2025 o 400" inputmode="numeric">
+      </label>
+      <label class="campo">
+        <span>Nº de recurso</span>
+        <input type="text" id="rec" placeholder="375/2025">
+      </label>
+      <label class="campo">
+        <span>Año</span>
+        <select id="anio"><option value="">Todos</option></select>
+      </label>
+      <label class="campo">
+        <span>Desde</span>
+        <input type="date" id="desde">
+      </label>
+      <label class="campo">
+        <span>Hasta</span>
+        <input type="date" id="hasta">
+      </label>
+      <label class="campo">
+        <span>Sentido</span>
+        <select id="sentido">
+          <option value="">Todos</option>
+          <option value="estima">Estimatoria</option>
+          <option value="parcial">Estimación parcial</option>
+          <option value="desestima">Desestimatoria</option>
+          <option value="inadmite">Inadmisión</option>
+          <option value="archivo">Desistimiento / pérdida de objeto</option>
+          <option value="otros">Otros</option>
+        </select>
+      </label>
+    </div>
+    <fieldset class="tribunales" id="tribunales">
+      <legend>Tribunales <button type="button" class="enlace" id="todos">todos</button> · <button type="button" class="enlace" id="ninguno">ninguno</button></legend>
+    </fieldset>
+    <div class="fila acciones">
+      <button type="submit" class="primario">Buscar</button>
+      <button type="button" id="limpiar">Limpiar</button>
+      <span id="resumen" class="resumen" aria-live="polite"></span>
+    </div>
+  </form>
+
+  <section id="aviso-tacrc" class="aviso" hidden></section>
+
+  <section class="resultados">
+    <div class="tabla-envoltorio">
+      <table id="tabla">
+        <thead>
+          <tr>
+            <th data-orden="t">Tribunal</th>
+            <th data-orden="n">Resolución</th>
+            <th data-orden="f" class="activa desc">Fecha</th>
+            <th data-orden="r">Recurso</th>
+            <th data-orden="s">Sentido</th>
+            <th>Órgano y objeto</th>
+            <th>Enlaces</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo"></tbody>
+      </table>
+    </div>
+    <div class="pie-tabla">
+      <button type="button" id="mas" hidden>Mostrar más resultados</button>
+    </div>
+  </section>
+
+  <section class="oficial">
+    <h2>Buscar en las webs oficiales</h2>
+    <p>Este índice se construye cada noche a partir de los repositorios públicos de cada tribunal, pero no es una fuente oficial: compruebe siempre la resolución en la web del tribunal. Los enlaces siguientes abren el buscador oficial de cada uno con los datos que haya escrito arriba.</p>
+    <ul id="enlaces-oficiales" class="enlaces-oficiales"></ul>
+
+    <details class="tacrc">
+      <summary>TACRC: construir el enlace al PDF de una resolución</summary>
+      <p>El buscador del TACRC no se puede indexar, pero la dirección de sus PDF es predecible si se conocen el número de recurso, el número de resolución y la fecha (los tres figuran en la cabecera de la resolución y en las citas habituales).</p>
+      <form id="form-tacrc" class="fila">
+        <label class="campo"><span>Nº de recurso</span><input type="text" id="tacrc-rec" placeholder="353/2024"></label>
+        <label class="campo"><span>Sufijo CCAA</span>
+          <select id="tacrc-suf">
+            <option value="">Ninguno</option>
+            <option>CLM</option><option>VAL</option><option>MU</option><option>IB</option><option>AST</option><option>ML</option><option>EXT</option><option>CANT</option><option>RIO</option><option>CEU</option>
+          </select></label>
+        <label class="campo"><span>Nº de resolución</span><input type="text" id="tacrc-res" placeholder="992/2024"></label>
+        <label class="campo"><span>Fecha</span><input type="date" id="tacrc-fecha"></label>
+        <button type="submit" class="primario">Abrir PDF</button>
+      </form>
+      <p class="nota" id="tacrc-url"></p>
+    </details>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <p id="estado"></p>
+    <p>Herramienta de uso libre y sin garantía, con finalidad orientativa. Los datos pertenecen a los tribunales que los publican. Código y datos en <a id="repo" href="https://github.com/umerez/buscador-trc">GitHub</a>.</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

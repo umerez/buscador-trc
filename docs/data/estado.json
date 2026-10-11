@@ -1,0 +1,191 @@
+{
+ "galicia": {
+  "ok": true,
+  "anios": {
+   "2018": {
+    "registros": 132
+   },
+   "2019": {
+    "registros": 291
+   },
+   "2020": {
+    "registros": 224
+   },
+   "2021": {
+    "registros": 263
+   },
+   "2022": {
+    "registros": 225
+   },
+   "2023": {
+    "registros": 227
+   },
+   "2024": {
+    "registros": 195
+   },
+   "2025": {
+    "registros": 250
+   },
+   "2026": {
+    "registros": 122
+   }
+  },
+  "error": null,
+  "total": 1929,
+  "segundos": 26.9,
+  "fecha": "2026-10-11T06:08:22+00:00"
+ },
+ "navarra": {
+  "ok": true,
+  "anios": {
+   "2013": {
+    "registros": 26
+   },
+   "2014": {
+    "registros": 32
+   },
+   "2015": {
+    "registros": 55
+   },
+   "2016": {
+    "registros": 41
+   },
+   "2017": {
+    "registros": 70
+   },
+   "2018": {
+    "registros": 97
+   },
+   "2019": {
+    "registros": 89
+   },
+   "2020": {
+    "registros": 116
+   },
+   "2021": {
+    "registros": 116
+   },
+   "2022": {
+    "registros": 98
+   },
+   "2023": {
+    "registros": 92
+   },
+   "2024": {
+    "registros": 70
+   },
+   "2025": {
+    "registros": 103
+   },
+   "2026": {
+    "registros": 101
+   }
+  },
+  "error": null,
+  "total": 1106,
+  "segundos": 65.3,
+  "fecha": "2026-10-11T06:09:56+00:00"
+ },
+ "canarias": {
+  "ok": true,
+  "anios": {
+   "2015": {
+    "registros": 33
+   },
+   "2016": {
+    "registros": 151
+   },
+   "2017": {
+    "registros": 173
+   },
+   "2018": {
+    "registros": 186
+   },
+   "2019": {
+    "registros": 225
+   },
+   "2020": {
+    "registros": 246
+   },
+   "2021": {
+    "registros": 285
+   },
+   "2022": {
+    "registros": 252
+   },
+   "2023": {
+    "registros": 232
+   },
+   "2024": {
+    "registros": 209
+   },
+   "2025": {
+    "registros": 298
+   },
+   "2026": {
+    "registros": 236
+   }
+  },
+  "error": null,
+  "total": 2517,
+  "segundos": 29.1,
+  "fecha": "2026-10-11T06:12:46+00:00"
+ },
+ "oarc": {
+  "ok": true,
+  "anios": {
+   "2011": {
+    "registros": 26
+   },
+   "2012": {
+    "registros": 104
+   },
+   "2013": {
+    "registros": 135
+   },
+   "2014": {
+    "registros": 134
+   },
+   "2015": {
+    "registros": 146
+   },
+   "2016": {
+    "registros": 143
+   },
+   "2017": {
+    "registros": 144
+   },
+   "2018": {
+    "registros": 186
+   },
+   "2019": {
+    "registros": 221
+   },
+   "2020": {
+    "registros": 183
+   },
+   "2021": {
+    "registros": 216
+   },
+   "2022": {
+    "registros": 207
+   },
+   "2023": {
+    "registros": 235
+   },
+   "2024": {
+    "registros": 236
+   },
+   "2025": {
+    "registros": 189
+   },
+   "2026": {
+    "registros": 146
+   }
+  },
+  "error": null,
+  "total": 2651,
+  "segundos": 265.5,
+  "fecha": "2026-10-11T06:22:55+00:00"
+ }
+}
