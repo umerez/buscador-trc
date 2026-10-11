@@ -1,6 +1,6 @@
 {
- "actualizado": "2026-10-11T17:03:11+00:00",
- "total": 31199,
+ "actualizado": "2026-10-11T17:49:47+00:00",
+ "total": 31200,
  "tribunales": [
   {
    "id": "tacrc",
@@ -12,9 +12,9 @@
    "desde": 2011,
    "documento": "Resolución",
    "parcial": "El buscador oficial del TACRC exige una comprobación anti-robots que impide indexarlo. Este índice solo contiene las resoluciones cuyos PDF conservan los archivos públicos de la web (Wayback Machine y Common Crawl): número, recurso, fecha y enlace, sin sentido ni objeto. Para el resto, use el buscador oficial o el constructor de enlaces al PDF.",
-   "total": 2392,
+   "total": 2393,
    "anios": {
-    "2011": 115,
+    "2011": 116,
     "2012": 265,
     "2013": 225,
     "2014": 540,

@@ -110,13 +110,58 @@
  "tacrc": {
   "ok": true,
   "anios": {
+   "2011": {
+    "registros": 116
+   },
+   "2012": {
+    "registros": 265
+   },
+   "2013": {
+    "registros": 225
+   },
+   "2014": {
+    "registros": 540
+   },
+   "2015": {
+    "registros": 184
+   },
+   "2016": {
+    "registros": 99
+   },
+   "2017": {
+    "registros": 111
+   },
+   "2018": {
+    "registros": 110
+   },
+   "2019": {
+    "registros": 133
+   },
+   "2020": {
+    "registros": 111
+   },
+   "2021": {
+    "registros": 134
+   },
+   "2022": {
+    "registros": 122
+   },
+   "2023": {
+    "registros": 111
+   },
+   "2024": {
+    "registros": 77
+   },
+   "2025": {
+    "registros": 37
+   },
    "2026": {
     "registros": 18
    }
   },
   "error": null,
-  "total": 2392,
-  "segundos": 55.2,
-  "fecha": "2026-10-11T16:56:45+00:00"
+  "total": 2393,
+  "segundos": 42.3,
+  "fecha": "2026-10-11T17:49:47+00:00"
  }
 }
