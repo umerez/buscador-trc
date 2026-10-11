@@ -215,7 +215,7 @@ tabla = pd.DataFrame({
 st.dataframe(
     tabla,
     hide_index=True,
-    use_container_width=True,
+    width="stretch",
     column_config={
         "PDF": st.column_config.LinkColumn("PDF", display_text="PDF"),
         "Otro idioma": st.column_config.LinkColumn("Otro idioma", display_text="PDF"),
