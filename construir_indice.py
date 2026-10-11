@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import inspect
+import re
 import json
 import logging
 import sys
@@ -58,6 +59,80 @@ def escribir_json(ruta: Path, datos, compacto=True):
         else:
             json.dump(datos, f, ensure_ascii=False, indent=1)
         f.write("\n")
+
+
+# ---------------------------------------------------------------- saneamiento
+
+RE_PDF_NUM = re.compile(r"(?:resoluci[oó]n?|resolucio|acuerdo|acord|res)[^\d/]{0,8}(\d{1,4})[-_](\d{2}|\d{4})(?![\d])", re.I)
+
+
+def _anio_valido(a: int, hoy: date) -> bool:
+    return 2010 <= a <= hoy.year + 1
+
+
+def _num_anio_pdf(pdf: str | None, hoy: date):
+    """(número, año) que sugiere el nombre del PDF, o None."""
+    if not pdf:
+        return None
+    nombre = pdf.rsplit("/", 1)[-1]
+    m = RE_PDF_NUM.search(nombre)
+    if not m:
+        return None
+    num, an = int(m.group(1)), int(m.group(2))
+    if an < 100:
+        an += 2000
+    return (num, an) if _anio_valido(an, hoy) else None
+
+
+def sanear(registros: list[dict], hoy: date | None = None) -> list[dict]:
+    """Corrige errores evidentes de origen (año imposible en el número, fecha en el futuro o a años del número)
+    cuando el nombre del PDF o la propia fecha lo resuelven sin ambigüedad. Lo que no se puede resolver se deja.
+    Después deduplica por clave quedándose con el registro más completo."""
+    hoy = hoy or date.today()
+    limite = hoy.toordinal() + 7
+    salida: dict[str, dict] = {}
+    for r in registros:
+        r = dict(r)
+        try:
+            num_s, an_s = r["n"].split("/")
+            num, an = int(num_s), int(an_s)
+        except ValueError:
+            salida.setdefault(f"{r['t']}|{r.get('k', 'resolucion')}|{r['n']}", r)
+            continue
+        pista = _num_anio_pdf(r.get("pdf"), hoy)
+        f_an = int(r["f"][:4]) if r.get("f") else None
+        original = r["n"]
+        # A) año imposible en el número → el del PDF (mismo número) o, si no, el de la fecha
+        if not _anio_valido(an, hoy):
+            if pista and pista[0] == num:
+                an = pista[1]
+            elif f_an and _anio_valido(f_an, hoy):
+                an = f_an
+        # B) el PDF (mismo número) y la fecha coinciden en otro año → el número lleva el año mal
+        elif pista and pista[0] == num and pista[1] != an and f_an == pista[1]:
+            an = pista[1]
+        if an != int(an_s):
+            r["n"] = f"{num}/{an}"
+            log.info("saneado %s: número %s → %s (pdf %s)", r["t"], original, r["n"], (r.get("pdf") or "").rsplit("/", 1)[-1])
+        # C) fecha a más de un año del número, o en el futuro, con el PDF de acuerdo con el número → año de la fecha mal
+        if r.get("f") and f_an is not None:
+            lejos = abs(f_an - an) > 1
+            futura = date.fromisoformat(r["f"]).toordinal() > limite and f_an != an
+            if (lejos or futura) and (pista is None or pista[1] == an):
+                try:
+                    nueva = date(an, int(r["f"][5:7]), int(r["f"][8:10])).isoformat()
+                except ValueError:
+                    nueva = None
+                if nueva and date.fromisoformat(nueva).toordinal() <= limite:
+                    log.info("saneado %s %s: fecha %s → %s", r["t"], r["n"], r["f"], nueva)
+                    r["f"] = nueva
+        k = f"{r['t']}|{r.get('k', 'resolucion')}|{r['n']}"
+        previo = salida.get(k)
+        if previo is None or len(r) > len(previo):
+            if previo is not None:
+                log.info("saneado %s: %s duplicado tras corregir; se conserva el más completo", r["t"], r["n"])
+            salida[k] = r
+    return list(salida.values())
 
 
 def orden(reg: dict):
@@ -121,7 +196,7 @@ def actualizar_tribunal(tid: str, anios: list[int], estado: dict) -> dict:
             por_clave[f"{r['t']}|{r.get('k', 'resolucion')}|{r['n']}"] = r
         resumen["anios"][str(anio)] = {"registros": len(nuevos_d)}
         log.info("%s %d: %d registros", tid, anio, len(nuevos_d))
-    registros = sorted(por_clave.values(), key=orden, reverse=True)
+    registros = sorted(sanear(list(por_clave.values())), key=orden, reverse=True)
     escribir_json(ruta, registros)
     resumen["total"] = len(registros)
     resumen["segundos"] = round(time.monotonic() - t0, 1)
@@ -168,11 +243,21 @@ def main(argv=None):
     ap.add_argument("--actual", action="store_true", help="año en curso, y el anterior si estamos en enero o febrero")
     ap.add_argument("--completo", action="store_true", help="desde el primer año de cada tribunal")
     ap.add_argument("--solo-meta", action="store_true", help="no recorre nada; regenera meta.json")
+    ap.add_argument("--sanear", action="store_true", help="no recorre nada; aplica el saneamiento a los ficheros guardados y regenera meta.json")
     ap.add_argument("-v", "--verbose", action="store_true")
     args = ap.parse_args(argv)
 
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s", datefmt="%H:%M:%S")
+    if args.sanear:
+        for tid in TRIBUNALES:
+            ruta = DATOS / f"{tid}.json"
+            if ruta.exists():
+                regs = leer_json(ruta, [])
+                escribir_json(ruta, sorted(sanear(regs), key=orden, reverse=True))
+        meta = escribir_meta()
+        print(f"meta.json: {meta['total']} registros")
+        return 0
     if args.solo_meta:
         meta = escribir_meta()
         print(f"meta.json: {meta['total']} registros")

@@ -34,3 +34,25 @@ class TestNormalizadores(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestSaneado(unittest.TestCase):
+    def test_sanear(self):
+        from datetime import date
+        import construir_indice as ci
+        hoy = date(2026, 10, 11)
+        regs = [
+            {"t": "madrid", "n": "522/2025", "f": "2026-12-09", "pdf": "https://x/resolucion_522-2025_expte_528-2025_.pdf"},
+            {"t": "madrid", "n": "411/2023", "f": "2026-07-30", "pdf": "https://x/resolucion_411-2026_expediente_379-2026_.pdf"},
+            {"t": "andalucia", "n": "230/200", "f": "2020-07-02", "pdf": "https://x/Resolucion230.pdf"},
+            {"t": "cataluna", "n": "144/2010", "f": "2020-04-07", "pdf": "https://x/resolucio-num-144-2020.pdf"},
+            {"t": "canarias", "n": "171/2016", "f": "2016-05-02", "pdf": "https://x/RES-171-2016-REMC-41-2016-L.pdf"},
+            {"t": "madrid", "n": "122/2026", "f": "2026-12-03", "pdf": "https://x/resolucion_122-2026_expediente_096-2026_0.pdf"},
+        ]
+        out = {r["t"] + r["n"]: r for r in ci.sanear(regs, hoy)}
+        self.assertEqual(out["madrid522/2025"]["f"], "2025-12-09")
+        self.assertIn("madrid411/2026", out)
+        self.assertIn("andalucia230/2020", out)
+        self.assertIn("cataluna144/2020", out)
+        self.assertEqual(out["canarias171/2016"]["f"], "2016-05-02")
+        self.assertEqual(out["madrid122/2026"]["f"], "2026-12-03")  # no se puede resolver: se deja
