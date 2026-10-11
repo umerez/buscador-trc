@@ -20,8 +20,11 @@ scrapers/<tribunal>.py   →  construir_indice.py  →  docs/data/<tribunal>.jso
 
 - Los scrapers solo recogen metadatos, nunca el texto completo de las resoluciones. El índice entero pesa
   unos pocos megabytes y se carga al abrir la página; a partir de ahí todo ocurre en el navegador.
-- El workflow `.github/workflows/actualizar.yml` ejecuta `construir_indice.py --actual` (año en curso) cada
-  noche y publica los cambios en `docs/data/`. También se puede lanzar a mano en modo `completo`.
+- La pasada nocturna (`ops/actualizar_nocturno.sh`, lanzada por launchd en el Mac del autor a las 03:30) ejecuta
+  `construir_indice.py --actual` (año en curso), hace commit de `docs/data/` y lo sube; GitHub Pages y Streamlit
+  Cloud se actualizan solos con ese commit. El workflow `.github/workflows/actualizar.yml` hace lo mismo desde
+  GitHub Actions, pero solo a mano: desde las IP de GitHub el portal de Navarra no responde y el de Madrid corta
+  el listado.
 - `docs/data/meta.json` lleva los recuentos por tribunal y año; `docs/data/estado.json`, el resultado de la
   última pasada (la página lo muestra en el pie).
 
