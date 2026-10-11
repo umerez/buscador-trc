@@ -8,7 +8,7 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 LOG=logs/nocturno.log
 {
   echo "===== $(date '+%Y-%m-%d %H:%M:%S')"
-  git pull --rebase -q origin main || { echo "git pull falló"; exit 1; }
+  git pull --rebase --autostash -q origin main || { echo "git pull falló"; exit 1; }
   "$PY" construir_indice.py --actual
   git add docs/data
   if git diff --cached --quiet; then
