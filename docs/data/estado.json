@@ -1,15 +1,15 @@
 {
  "madrid": {
-  "ok": false,
+  "ok": true,
   "anios": {
    "2026": {
-    "error": "404 en https://www.comunidad.madrid/tacp/busquedaresoluciones"
+    "registros": 488
    }
   },
-  "error": "2026: 404 en https://www.comunidad.madrid/tacp/busquedaresoluciones",
+  "error": null,
   "total": 5923,
-  "segundos": 49.7,
-  "fecha": "2026-10-11T16:57:35+00:00"
+  "segundos": 68.6,
+  "fecha": "2026-10-11T17:53:15+00:00"
  },
  "cyl": {
   "ok": true,
@@ -20,8 +20,8 @@
   },
   "error": null,
   "total": 2234,
-  "segundos": 14.5,
-  "fecha": "2026-10-11T16:57:49+00:00"
+  "segundos": 13.7,
+  "fecha": "2026-10-11T17:53:29+00:00"
  },
  "andalucia": {
   "ok": true,
@@ -32,8 +32,8 @@
   },
   "error": null,
   "total": 6864,
-  "segundos": 30.6,
-  "fecha": "2026-10-11T16:58:20+00:00"
+  "segundos": 18.4,
+  "fecha": "2026-10-11T17:53:47+00:00"
  },
  "galicia": {
   "ok": true,
@@ -45,19 +45,19 @@
   "error": null,
   "total": 1929,
   "segundos": 1.1,
-  "fecha": "2026-10-11T16:58:21+00:00"
+  "fecha": "2026-10-11T17:53:48+00:00"
  },
  "navarra": {
-  "ok": false,
+  "ok": true,
   "anios": {
    "2026": {
-    "error": "Sin respuesta de https://portalcontratacion.navarra.es/es/acuerdos-2026: HTTPSConnectionPool(host='portalcontratacion.navarra.es', port=443): Max retries exceeded with url: /es/acuerdos-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='portalcontratacion.navarra.es', port=443) at 0x7f1d7b358950>, 'Connection to portalcontratacion.navarra.es timed out. (connect timeout=60)'))"
+    "registros": 101
    }
   },
-  "error": "2026: Sin respuesta de https://portalcontratacion.navarra.es/es/acuerdos-2026: HTTPSConnectionPool(host='portalcontratacion.navarra.es', port=443): Max retries exceeded with url: /es/acuerdos-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='portalcontratacion.navarra.es', port=443) at 0x7f1d7b358950>, 'Connection to portalcontratacion.navarra.es timed out. (connect timeout=60)'))",
+  "error": null,
   "total": 1106,
-  "segundos": 192.8,
-  "fecha": "2026-10-11T17:01:34+00:00"
+  "segundos": 7.1,
+  "fecha": "2026-10-11T17:53:55+00:00"
  },
  "cataluna": {
   "ok": true,
@@ -68,8 +68,8 @@
   },
   "error": null,
   "total": 3625,
-  "segundos": 84.4,
-  "fecha": "2026-10-11T17:02:58+00:00"
+  "segundos": 78.4,
+  "fecha": "2026-10-11T17:55:14+00:00"
  },
  "aragon": {
   "ok": true,
@@ -80,8 +80,8 @@
   },
   "error": null,
   "total": 1959,
-  "segundos": 4.9,
-  "fecha": "2026-10-11T17:03:03+00:00"
+  "segundos": 3.8,
+  "fecha": "2026-10-11T17:55:18+00:00"
  },
  "oarc": {
   "ok": true,
@@ -92,8 +92,8 @@
   },
   "error": null,
   "total": 2651,
-  "segundos": 2.9,
-  "fecha": "2026-10-11T17:03:06+00:00"
+  "segundos": 12.1,
+  "fecha": "2026-10-11T17:55:30+00:00"
  },
  "canarias": {
   "ok": true,
@@ -104,64 +104,19 @@
   },
   "error": null,
   "total": 2516,
-  "segundos": 4.4,
-  "fecha": "2026-10-11T17:03:11+00:00"
+  "segundos": 3.3,
+  "fecha": "2026-10-11T17:55:33+00:00"
  },
  "tacrc": {
   "ok": true,
   "anios": {
-   "2011": {
-    "registros": 116
-   },
-   "2012": {
-    "registros": 265
-   },
-   "2013": {
-    "registros": 225
-   },
-   "2014": {
-    "registros": 540
-   },
-   "2015": {
-    "registros": 184
-   },
-   "2016": {
-    "registros": 99
-   },
-   "2017": {
-    "registros": 111
-   },
-   "2018": {
-    "registros": 110
-   },
-   "2019": {
-    "registros": 133
-   },
-   "2020": {
-    "registros": 111
-   },
-   "2021": {
-    "registros": 134
-   },
-   "2022": {
-    "registros": 122
-   },
-   "2023": {
-    "registros": 111
-   },
-   "2024": {
-    "registros": 77
-   },
-   "2025": {
-    "registros": 37
-   },
    "2026": {
     "registros": 18
    }
   },
   "error": null,
   "total": 2393,
-  "segundos": 42.3,
-  "fecha": "2026-10-11T17:49:47+00:00"
+  "segundos": 55.1,
+  "fecha": "2026-10-11T17:52:06+00:00"
  }
 }
