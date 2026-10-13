@@ -1,6 +1,6 @@
 {
- "actualizado": "2026-10-12T01:35:33+00:00",
- "total": 31200,
+ "actualizado": "2026-10-13T01:35:57+00:00",
+ "total": 31201,
  "tribunales": [
   {
    "id": "tacrc",
@@ -42,7 +42,7 @@
    "idioma": "es",
    "desde": 2011,
    "documento": "Resolución",
-   "total": 5922,
+   "total": 5923,
    "anios": {
     "2011": 92,
     "2012": 158,
@@ -59,7 +59,7 @@
     "2023": 446,
     "2024": 488,
     "2025": 542,
-    "2026": 477
+    "2026": 478
    },
    "fichero": "data/madrid.json"
   },
