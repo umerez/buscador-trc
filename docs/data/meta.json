@@ -1,6 +1,6 @@
 {
- "actualizado": "2026-10-16T01:40:54+00:00",
- "total": 31232,
+ "actualizado": "2026-10-16T16:34:29+00:00",
+ "total": 31241,
  "tribunales": [
   {
    "id": "tacrc",
@@ -235,7 +235,7 @@
    "idioma": "es/eu",
    "desde": 2011,
    "documento": "Resolución",
-   "total": 2651,
+   "total": 2660,
    "anios": {
     "2011": 26,
     "2012": 104,
@@ -252,7 +252,7 @@
     "2023": 235,
     "2024": 236,
     "2025": 189,
-    "2026": 146
+    "2026": 155
    },
    "fichero": "data/oarc.json"
   },
