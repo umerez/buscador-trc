@@ -1,6 +1,6 @@
 {
- "actualizado": "2026-10-17T07:20:34+00:00",
- "total": 31270,
+ "actualizado": "2026-10-17T10:38:58+00:00",
+ "total": 31273,
  "tribunales": [
   {
    "id": "tacrc",
@@ -101,7 +101,7 @@
    "idioma": "es",
    "desde": 2011,
    "documento": "Resolución",
-   "total": 6871,
+   "total": 6874,
    "anios": {
     "2011": 1,
     "2012": 123,
@@ -118,7 +118,7 @@
     "2023": 645,
     "2024": 669,
     "2025": 794,
-    "2026": 651
+    "2026": 654
    },
    "fichero": "data/andalucia.json"
   },

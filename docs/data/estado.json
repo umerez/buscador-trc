@@ -8,8 +8,8 @@
   },
   "error": null,
   "total": 5923,
-  "segundos": 368.1,
-  "fecha": "2026-10-17T07:17:45+00:00",
+  "segundos": 366.9,
+  "fecha": "2026-10-17T10:36:40+00:00",
   "avisos": 1,
   "avisos_detalle": [
    "madrid 2026: 6 día(s) con menos resoluciones que su contador tras repetir la lectura: 2026-01-15 (9/10), 2026-01-29 (8/9), 2026-04-23 (11/13), 2026-04-30 (10/11), 2026-09-03 (27/28), 2026-09-17 (17/18)"
@@ -24,27 +24,20 @@
   },
   "error": null,
   "total": 2246,
-  "segundos": 16.2,
-  "fecha": "2026-10-17T07:18:02+00:00"
+  "segundos": 15.9,
+  "fecha": "2026-10-17T10:36:56+00:00"
  },
  "andalucia": {
   "ok": true,
   "anios": {
    "2026": {
-    "registros": 653
+    "registros": 656
    }
   },
   "error": null,
-  "total": 6871,
-  "segundos": 25.1,
-  "fecha": "2026-10-17T07:18:27+00:00",
-  "avisos": 4,
-  "avisos_detalle": [
-   "clave repetida con recursos distintos sin arreglo posible: andalucia|resolucion|589/2026; se descarta la fila con recurso 589/2026 y PDF Resoluci%C3%B3n_589_2026_Recurso_590_2026.pdf",
-   "clave repetida con recursos distintos sin arreglo posible: andalucia|resolucion|11/2026; se descarta la fila con recurso 463/2026 y PDF INCIDENTE%20EJECUCION_11_2026_Resoluci%C3%B3n_503_2026_Recurso_463_2026.pdf",
-   "clave repetida con recursos distintos sin arreglo posible: andalucia|resolucion|18/2026; se descarta la fila con recurso 427/2026 y PDF Resoluci%C3%B3n%20Rectificacion_18_2026_%28Resoluci%C3%B3n_446_2026_Recurso_427_2026",
-   "clave repetida con recursos distintos sin arreglo posible: andalucia|resolucion|369/2026; se descarta la fila con recurso 322/2026 y PDF Resoluci%C3%B3n_369_2026_Recurso_332_2026.pdf"
-  ]
+  "total": 6874,
+  "segundos": 9.3,
+  "fecha": "2026-10-17T10:37:05+00:00"
  },
  "galicia": {
   "ok": true,
@@ -56,7 +49,7 @@
   "error": null,
   "total": 1949,
   "segundos": 0.9,
-  "fecha": "2026-10-17T07:18:28+00:00"
+  "fecha": "2026-10-17T10:37:06+00:00"
  },
  "navarra": {
   "ok": true,
@@ -67,8 +60,8 @@
   },
   "error": null,
   "total": 1106,
-  "segundos": 6.9,
-  "fecha": "2026-10-17T07:18:34+00:00"
+  "segundos": 4.0,
+  "fecha": "2026-10-17T10:37:10+00:00"
  },
  "cataluna": {
   "ok": true,
@@ -79,11 +72,10 @@
   },
   "error": null,
   "total": 3638,
-  "segundos": 103.1,
-  "fecha": "2026-10-17T07:20:18+00:00",
-  "avisos": 2,
+  "segundos": 92.0,
+  "fecha": "2026-10-17T10:38:42+00:00",
+  "avisos": 1,
   "avisos_detalle": [
-   "2026: rows=1000 devolvió 10 de 394; paginando de 10 en 10",
    "2026: el contador dice 394 y se han obtenido 391 registros únicos (números de resolución ausentes: [])"
   ]
  },
@@ -96,8 +88,8 @@
   },
   "error": null,
   "total": 1961,
-  "segundos": 4.6,
-  "fecha": "2026-10-17T07:20:22+00:00"
+  "segundos": 4.1,
+  "fecha": "2026-10-17T10:38:46+00:00"
  },
  "oarc": {
   "ok": true,
@@ -108,8 +100,8 @@
   },
   "error": null,
   "total": 2660,
-  "segundos": 7.4,
-  "fecha": "2026-10-17T07:20:30+00:00"
+  "segundos": 8.4,
+  "fecha": "2026-10-17T10:38:55+00:00"
  },
  "canarias": {
   "ok": true,
@@ -120,8 +112,8 @@
   },
   "error": null,
   "total": 2523,
-  "segundos": 4.1,
-  "fecha": "2026-10-17T07:20:34+00:00"
+  "segundos": 3.0,
+  "fecha": "2026-10-17T10:38:58+00:00"
  },
  "tacrc": {
   "ok": true,
@@ -132,11 +124,7 @@
   },
   "error": null,
   "total": 2393,
-  "segundos": 74.6,
-  "fecha": "2026-10-17T07:11:37+00:00",
-  "avisos": 1,
-  "avisos_detalle": [
-   "TACRC: Wayback CDX no responde para minhap.gob.es: Sin respuesta de http://web.archive.org/cdx/search/cdx: 503 en http://web.archive.org/cdx/search/cdx"
-  ]
+  "segundos": 26.5,
+  "fecha": "2026-10-17T10:30:33+00:00"
  }
 }
