@@ -5,3 +5,7 @@ _tmp*/
 *.log
 .venv/
 logs/
+
+# Documentación de solicitudes a organismos (lleva datos personales; el repositorio es público)
+*solicitud*/
+*justificante*

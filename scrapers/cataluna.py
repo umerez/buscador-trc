@@ -27,6 +27,7 @@ Comportamiento comprobado el 11/10/2026:
 """
 from __future__ import annotations
 
+import calendar
 import logging
 import math
 import re
@@ -89,8 +90,9 @@ def _get(sesion: Sesion, url: str, **kw) -> str:
     return sesion.texto(url, **kw)
 
 
-def _pagina_listado(sesion: Sesion, anio: int, rows: Optional[int] = None, pagina: Optional[int] = None) -> str:
-    params = {"datainf": f"01/01/{anio}", "datasup": f"31/12/{anio}"}
+def _pagina_listado(sesion: Sesion, anio: int, rows: Optional[int] = None, pagina: Optional[int] = None,
+                    ini: Optional[str] = None, fin: Optional[str] = None) -> str:
+    params = {"datainf": ini or f"01/01/{anio}", "datasup": fin or f"31/12/{anio}"}
     if rows:
         params["rows"] = str(rows)
     if pagina and pagina > 1:
@@ -205,19 +207,44 @@ def _listado(sesion: Sesion, anio: int) -> list[Registro]:
             log.info("%d: pasada %d de paginación, %d artículos distintos de %d", anio, pasada, len(distintos), total)
 
     registros: dict[str, Registro] = {}
-    for art in arts:
-        reg = _registro_de_articulo(art, anio)
-        if reg is None:
-            continue
-        previo = registros.get(reg.clave())
-        if previo is None:
-            registros[reg.clave()] = reg
-        else:  # mismo número repetido en el listado: completar huecos, no duplicar
-            for campo in ("f", "d", "s", "pdf", "url"):
-                if not getattr(previo, campo) and getattr(reg, campo):
-                    setattr(previo, campo, getattr(reg, campo))
+
+    def _fusionar(articulos) -> None:
+        for art in articulos:
+            reg = _registro_de_articulo(art, anio)
+            if reg is None:
+                continue
+            previo = registros.get(reg.clave())
+            if previo is None:
+                registros[reg.clave()] = reg
+            else:  # mismo número repetido en el listado: completar huecos, no duplicar
+                for campo in ("f", "d", "s", "pdf", "url"):
+                    if not getattr(previo, campo) and getattr(reg, campo):
+                        setattr(previo, campo, getattr(reg, campo))
+
+    _fusionar(arts)
     if total is not None and len(registros) < total:
-        log.warning("%d: el contador dice %d y se han obtenido %d registros únicos", anio, total, len(registros))
+        # El año entero no cuadra con el contador (2026: 394 declarados, 384 obtenidos de forma estable en tres
+        # pasadas). Se relee mes a mes: cada mes cabe de sobra en una petición con ``rows`` y no depende de la
+        # paginación inestable. Si algún mes no devuelve nada con ``rows``, se pagina ese mes de 10 en 10.
+        log.info("%d: faltan %d según el contador; se relee mes a mes", anio, total - len(registros))
+        for mes in range(1, 13):
+            ini = f"01/{mes:02d}/{anio}"
+            fin = f"{calendar.monthrange(anio, mes)[1]:02d}/{mes:02d}/{anio}"
+            soup = BeautifulSoup(_pagina_listado(sesion, anio, rows=ROWS_MAX, ini=ini, fin=fin), "lxml")
+            articulos = _articulos(soup)
+            n_mes = _contador(soup)
+            if not articulos and n_mes is None:
+                soup = BeautifulSoup(_pagina_listado(sesion, anio, ini=ini, fin=fin), "lxml")
+                n_mes = _contador(soup)
+                articulos = list(_articulos(soup))
+                for pagina in range(2, math.ceil((n_mes or 0) / POR_PAGINA) + 1):
+                    articulos.extend(_articulos(BeautifulSoup(_pagina_listado(sesion, anio, pagina=pagina, ini=ini, fin=fin), "lxml")))
+            _fusionar(articulos)
+    if total is not None and len(registros) < total:
+        numeros = sorted(int(r.n.split("/")[0]) for r in registros.values() if r.k is None and r.n.split("/")[0].isdigit())
+        ausentes = [i for i in range(numeros[0], numeros[-1] + 1) if i not in set(numeros)] if numeros else []
+        log.warning("%d: el contador dice %d y se han obtenido %d registros únicos (números de resolución ausentes: %s)",
+                    anio, total, len(registros), ausentes[:20])
     return list(registros.values())
 
 

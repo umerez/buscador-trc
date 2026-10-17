@@ -33,6 +33,26 @@ UMBRAL_SOSPECHA = 0.5   # si el año nuevo trae menos de la mitad que el guardad
 log = logging.getLogger("indice")
 
 
+class ContadorAvisos(logging.Handler):
+    """Cuenta los WARNING de cada tribunal para que el resumen final no diga «0 incidencias» con avisos pendientes.
+
+    Los reintentos de red («intento 1/3 falló») no cuentan: si los tres fallan, el tribunal ya se marca como fallido.
+    """
+
+    def __init__(self):
+        super().__init__(level=logging.WARNING)
+        self.mensajes: list[str] = []
+
+    def emit(self, record: logging.LogRecord) -> None:
+        msg = record.getMessage()
+        if not msg.startswith("intento "):
+            self.mensajes.append(msg)
+
+    def reiniciar(self) -> list[str]:
+        previos, self.mensajes = self.mensajes, []
+        return previos
+
+
 def cargar_modulo(tid: str):
     return importlib.import_module(f"scrapers.{tid}")
 
@@ -91,6 +111,15 @@ def sanear(registros: list[dict], hoy: date | None = None) -> list[dict]:
     hoy = hoy or date.today()
     limite = hoy.toordinal() + 7
     salida: dict[str, dict] = {}
+    # fechas por (tribunal, año del número) → {nº: fecha}, para comprobar que una fecha corregida encaja con sus vecinas
+    vecinas: dict[tuple, dict[int, str]] = {}
+    for r in registros:
+        try:
+            ns, an_ = r["n"].split("/")
+            if r.get("f") and not r.get("k") and ns.isdigit():
+                vecinas.setdefault((r["t"], int(an_)), {})[int(ns)] = r["f"]
+        except ValueError:
+            continue
     for r in registros:
         r = dict(r)
         try:
@@ -126,6 +155,29 @@ def sanear(registros: list[dict], hoy: date | None = None) -> list[dict]:
                 if nueva and date.fromisoformat(nueva).toordinal() <= limite:
                     log.info("saneado %s %s: fecha %s → %s", r["t"], r["n"], r["f"], nueva)
                     r["f"] = nueva
+        # D) fecha futura aunque sea del mismo año del número (12/03 leída como 03/12): se corrige solo si intercambiar
+        #    día y mes la deja en el pasado Y encaja entre las fechas de las resoluciones de número anterior y posterior;
+        #    si no, se deja y se avisa
+        if r.get("f") and date.fromisoformat(r["f"]).toordinal() > limite:
+            fd = date.fromisoformat(r["f"])
+            alt = None
+            if fd.day <= 12:
+                try:
+                    alt = date(fd.year, fd.day, fd.month)
+                except ValueError:
+                    alt = None
+            ok = False
+            if alt is not None and alt.toordinal() <= limite:
+                tabla = vecinas.get((r["t"], an), {})
+                ant = [tabla[i] for i in range(num - 1, max(num - 4, 0), -1) if i in tabla]
+                pos = [tabla[i] for i in range(num + 1, num + 4) if i in tabla]
+                if ant and pos:
+                    ok = ant[0] <= alt.isoformat() <= pos[0]
+            if ok:
+                log.info("saneado %s %s: fecha futura %s → %s (día y mes intercambiados; encaja con las vecinas)", r["t"], r["n"], r["f"], alt.isoformat())
+                r["f"] = alt.isoformat()
+            else:
+                log.warning("%s %s: fecha futura %s sin corrección posible", r["t"], r["n"], r["f"])
         k = f"{r['t']}|{r.get('k', 'resolucion')}|{r['n']}"
         previo = salida.get(k)
         if previo is None or len(r) > len(previo):
@@ -267,6 +319,9 @@ def main(argv=None):
     ids = args.tribunal or list(TRIBUNALES)
     estado = leer_json(DATOS / "estado.json", {})
     fallos = 0
+    con_avisos: dict[str, int] = {}
+    contador = ContadorAvisos()
+    logging.getLogger().addHandler(contador)
     for tid in ids:
         mod = cargar_modulo(tid)
         if args.completo:
@@ -280,12 +335,19 @@ def main(argv=None):
         if not hasattr(mod, "listar"):
             continue
         log.info("== %s: años %s", tid, anios)
+        contador.reiniciar()
         res = actualizar_tribunal(tid, anios, estado)
+        avisos = contador.reiniciar()
+        if avisos:
+            res["avisos"] = len(avisos)
+            res["avisos_detalle"] = [a[:220] for a in avisos[:6]]
+            con_avisos[tid] = len(avisos)
         if not res["ok"]:
             fallos += 1
         escribir_json(DATOS / "estado.json", estado, compacto=False)
     meta = escribir_meta()
-    print(f"Índice: {meta['total']} registros. Tribunales con incidencias: {fallos}")
+    extra = ", ".join(f"{t} {n}" for t, n in con_avisos.items()) or "ninguno"
+    print(f"Índice: {meta['total']} registros. Tribunales con incidencias: {fallos}. Tribunales con avisos: {len(con_avisos)} ({extra})")
     return 0
 
 

@@ -20,6 +20,9 @@ Estrategia (comprobada el 11/10/2026):
   el órgano concreto en los metadatos.
 - La categoría «Objeto» (Limpieza, TICs, Suministros Médicos...) se añade al final de `d` entre
   paréntesis para que sea buscable.
+- Orden inestable (corregido el 17/10/2026): con muchas resoluciones el mismo día (hasta 26) la paginación
+  repite unas filas y salta otras, y el contador no cuadra (2026: 508 declaradas, 488 leídas). `listar` lee por
+  meses y, si un rango no cuadra con su contador, lo relee y lo parte hasta llegar a un día.
 - Trampa: el megamenú trae tres enlaces fijos a resoluciones destacadas (`/tacp/resolucion/...`)
   fuera del `view-content`, y hay un segundo `div.view-content` (bloque lateral) sin filas de
   resolución. Solo se leen los `li.views-row` del `view-content` que contiene
@@ -34,9 +37,12 @@ Estrategia (comprobada el 11/10/2026):
 """
 from __future__ import annotations
 
+import calendar
 import logging
+import math
 import re
 import sys
+from datetime import date, timedelta
 from typing import Dict, List, Optional
 
 from bs4 import BeautifulSoup
@@ -127,14 +133,83 @@ def _fila(li, anio: int) -> Optional[Registro]:
     return Registro(t=TRIBUNAL["id"], n=n, f=f, d=d, pdf=pdf, url=url)
 
 
-def _pagina(ses: Sesion, anio: int, page: int):
+def _dmy(d: date) -> str:
+    return d.strftime("%d/%m/%Y")
+
+
+def _pagina(ses: Sesion, anio: int, page: int, ini: Optional[date] = None, fin: Optional[date] = None):
+    """Una página del listado. Sin rango explícito, el año entero."""
     params = {
-        "field_fecha[date]": f"01/01/{anio}",
-        "field_fecha_1[date]": f"31/12/{anio}",
+        "field_fecha[date]": _dmy(ini) if ini else f"01/01/{anio}",
+        "field_fecha_1[date]": _dmy(fin) if fin else f"31/12/{anio}",
         "page": page,
     }
     html = ses.texto(BUSCADOR, params=params)
     return _sopa(html)
+
+
+def _leer_paginas(ses: Sesion, anio: int, ini: date, fin: date, acumulado: Dict[str, Registro]):
+    """Recorre la paginación del rango [ini, fin] y suma a `acumulado` las filas nuevas. Devuelve el total declarado.
+
+    No corta cuando una página no aporta nada nuevo: con el orden inestable del buscador (muchas resoluciones
+    con la misma fecha) una página puede repetir filas y la siguiente traer las que faltaban. Se acota por el total
+    declarado (más una página de margen) y por MAX_PAGINAS.
+    """
+    total: Optional[int] = None
+    for page in range(MAX_PAGINAS):
+        soup = _pagina(ses, anio, page, ini, fin)
+        vc = _view_content(soup)
+        if vc is None:
+            break
+        if total is None:
+            total = _total(vc)
+        filas = vc.select("li.views-row")
+        for li in filas:
+            reg = _fila(li, anio)
+            if reg is None:
+                continue
+            acumulado.setdefault(reg.clave(), reg)
+        if not filas or len(filas) < POR_PAGINA:
+            break
+        if total is not None and page + 1 >= math.ceil(total / POR_PAGINA) + 1:
+            break
+    return total
+
+
+def _leer_rango(ses: Sesion, anio: int, ini: date, fin: date, incompletos: List[tuple]) -> Dict[str, Registro]:
+    """Todas las resoluciones fechadas en [ini, fin].
+
+    El buscador pagina con un orden que no es estable entre peticiones cuando varias resoluciones comparten fecha
+    (hasta 26 el mismo día): al leer 5 en 5 se repiten unas y se saltan otras, y el contador no cuadra con lo leído
+    (2026: 508 declaradas, 488 leídas). Remedio: si el rango no cuadra con su contador se vuelve a leer (hasta tres
+    pasadas en rangos de una semana o menos) y, si sigue sin cuadrar, se parte por la mitad hasta llegar a un día.
+    Lo que no se pueda completar en un día se anota en `incompletos` (fecha, leídas, declaradas).
+    """
+    acumulado: Dict[str, Registro] = {}
+    dias = (fin - ini).days
+    pasadas = 1 if dias > 7 else 3
+    total: Optional[int] = None
+    for _ in range(pasadas):
+        total = _leer_paginas(ses, anio, ini, fin, acumulado)
+        if total is None or len(acumulado) >= total:
+            break
+    if total is None or len(acumulado) >= total:
+        return acumulado
+    if dias == 0:
+        incompletos.append((ini, len(acumulado), total))
+        return acumulado
+    mitad = ini + timedelta(days=dias // 2)
+    for sub_ini, sub_fin in ((ini, mitad), (mitad + timedelta(days=1), fin)):
+        for k, reg in _leer_rango(ses, anio, sub_ini, sub_fin, incompletos).items():
+            acumulado.setdefault(k, reg)
+    return acumulado
+
+
+def _meses(anio: int):
+    for m in range(1, 13):
+        ini = date(anio, m, 1)
+        fin = date(anio, m, calendar.monthrange(anio, m)[1])
+        yield ini, fin
 
 
 # ---------------------------------------------------------------- ficha
@@ -251,47 +326,26 @@ def listar(anio: int, sesion: Optional[Sesion] = None, fichas: bool = True, omit
     tipo de contrato, acto recurrido, procedencia y la URL directa del PDF. `[]` si el año no tiene nada.
     """
     ses = sesion or Sesion()
-    registros: List[Registro] = []
+    incompletos: List[tuple] = []
     vistos: Dict[str, Registro] = {}
-    total: Optional[int] = None
+    for ini, fin in _meses(anio):
+        for k, reg in _leer_rango(ses, anio, ini, fin, incompletos).items():
+            vistos.setdefault(k, reg)
+    registros: List[Registro] = list(vistos.values())
+    if not registros:
+        log.info("madrid %d: sin resultados", anio)
+        return []
+    log.info("madrid %d: %d resoluciones leídas", anio, len(registros))
 
-    for page in range(MAX_PAGINAS):
-        soup = _pagina(ses, anio, page)
-        vc = _view_content(soup)
-        if vc is None:
-            if page == 0:
-                log.info("madrid %d: sin resultados", anio)
-            break
-        if total is None:
-            total = _total(vc)
-            log.info("madrid %d: %s resoluciones", anio, total if total is not None else "?")
-        filas = vc.select("li.views-row")
-        nuevos = 0
-        for li in filas:
-            reg = _fila(li, anio)
-            if reg is None:
-                continue
-            k = reg.clave()
-            if k in vistos:
-                continue
-            vistos[k] = reg
-            registros.append(reg)
-            nuevos += 1
-        if not filas or nuevos == 0:
-            break
-        if total is not None and len(registros) >= total:
-            break
-        if len(filas) < POR_PAGINA:
-            break
-    else:
-        log.warning("madrid %d: alcanzado MAX_PAGINAS=%d", anio, MAX_PAGINAS)
-
-    if total is not None and len(registros) != total:
-        log.warning("madrid %d: el contador dice %d y se han leído %d", anio, total, len(registros))
+    if incompletos:
+        resumen = ", ".join(f"{d.isoformat()} ({leidas}/{decl})" for d, leidas, decl in incompletos[:8])
+        log.warning("madrid %d: %d día(s) con menos resoluciones que su contador tras repetir la lectura: %s",
+                    anio, len(incompletos), resumen)
 
     fuera = [r.n for r in registros if not r.n.endswith(f"/{anio}")]
     if fuera:
-        log.warning("madrid %d: %d resoluciones numeradas en otro año: %s", anio, len(fuera), fuera[:10])
+        # erratas de origen (número con año equivocado o fecha con año equivocado): no son un fallo del scraper
+        log.info("madrid %d: %d resoluciones numeradas en otro año (erratas de origen): %s", anio, len(fuera), fuera[:10])
 
     if fichas:
         for i, reg in enumerate(registros, 1):

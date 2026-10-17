@@ -48,6 +48,9 @@ class TestSaneado(unittest.TestCase):
             {"t": "cataluna", "n": "144/2010", "f": "2020-04-07", "pdf": "https://x/resolucio-num-144-2020.pdf"},
             {"t": "canarias", "n": "171/2016", "f": "2016-05-02", "pdf": "https://x/RES-171-2016-REMC-41-2016-L.pdf"},
             {"t": "madrid", "n": "122/2026", "f": "2026-12-03", "pdf": "https://x/resolucion_122-2026_expediente_096-2026_0.pdf"},
+            {"t": "madrid", "n": "121/2026", "f": "2026-03-05"},
+            {"t": "madrid", "n": "123/2026", "f": "2026-03-12"},
+            {"t": "madrid", "n": "300/2026", "f": "2026-11-04"},  # futura y sin vecinas: no se puede resolver
         ]
         out = {r["t"] + r["n"]: r for r in ci.sanear(regs, hoy)}
         self.assertEqual(out["madrid522/2025"]["f"], "2025-12-09")
@@ -55,4 +58,6 @@ class TestSaneado(unittest.TestCase):
         self.assertIn("andalucia230/2020", out)
         self.assertIn("cataluna144/2020", out)
         self.assertEqual(out["canarias171/2016"]["f"], "2016-05-02")
-        self.assertEqual(out["madrid122/2026"]["f"], "2026-12-03")  # no se puede resolver: se deja
+        # fecha futura con día y mes intercambiados: encaja entre la 121 (05/03) y la 123 (12/03)
+        self.assertEqual(out["madrid122/2026"]["f"], "2026-03-12")
+        self.assertEqual(out["madrid300/2026"]["f"], "2026-11-04")  # sin vecinas que lo confirmen: se deja y se avisa

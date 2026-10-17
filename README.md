@@ -28,6 +28,21 @@ scrapers/<tribunal>.py   →  construir_indice.py  →  docs/data/<tribunal>.jso
 - `docs/data/meta.json` lleva los recuentos por tribunal y año; `docs/data/estado.json`, el resultado de la
   última pasada (la página lo muestra en el pie).
 
+## Operación en Yoda (Mac Mini)
+
+La pasada nocturna corre en Yoda, que está siempre encendido. Tres scripts en `ops/`:
+
+```
+ops/instalar_launchd.sh            # instala el agente com.umerez.buscador-trc y comprueba que queda cargado
+ops/instalar_launchd.sh --probar   # además lanza una pasada ahora (10-15 min)
+ops/comprobar_estado.sh            # ¿está cargado?, ¿corrió esta noche?, ¿hay avisos?, ¿tiene gh el token de umerez?
+```
+
+`actualizar_nocturno.sh` deja el resultado de cada pasada en `logs/ultimo_estado.txt`, evita pasadas simultáneas,
+busca un Python con las dependencias y avisa con una notificación del escritorio si falla. Los avisos de cada
+tribunal quedan en `docs/data/estado.json`. Para volver a recorrer un tribunal a mano:
+`python3 construir_indice.py --tribunal madrid --actual`.
+
 ## Tribunales
 
 | Tribunal | Id | Cobertura | Fuente |

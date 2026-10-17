@@ -160,7 +160,7 @@ def _num_anio(slug: str, fecha_txt: Optional[str]) -> Optional[tuple]:
         if m2 and TRIBUNAL["desde"] <= int(m2.group(1)) <= hoy + 1:
             if slug not in _AVISADOS:
                 _AVISADOS.add(slug)
-                log.warning("OARC: slug %s con año imposible; se usa el de la fecha %s", slug, fecha_txt)
+                log.info("OARC: slug %s con año imposible (errata de origen); se usa el de la fecha %s", slug, fecha_txt)
             an = int(m2.group(1))
         else:
             return None

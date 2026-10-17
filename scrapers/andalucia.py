@@ -195,41 +195,63 @@ def _sufijo_resubida(pdf: Optional[str]) -> int:
     return int(m.group(1)) if m else -1
 
 
+def _recurso_pdf(pdf: Optional[str]) -> Optional[str]:
+    """Número de recurso que lleva el nombre del PDF ('..._Recurso_368_2026.pdf' → '368/2026')."""
+    if not pdf:
+        return None
+    m = re.search(r"recurso[\s_\-]*(\d{1,4})[\s_/\-]+(\d{2,4})", unquote(urlsplit(pdf).path.rsplit("/", 1)[-1]), re.I)
+    return numero(f"{m.group(1)}/{m.group(2)}") if m else None
+
+
+def _coherencia(r: Registro, anio: int) -> int:
+    """2 si el nombre del PDF coincide con el número y con el recurso del título; 1 si solo con el número; 0 si no."""
+    if _num_pdf(r.pdf, anio) != r.n:
+        return 0
+    rp = _recurso_pdf(r.pdf)
+    return 2 if (rp is None or r.r is None or rp == numero(r.r)) else 1
+
+
 def _deduplicar(registros: list[Registro], anio: int) -> list[Registro]:
-    """Quita filas repetidas (resubidas del mismo PDF) y corrige títulos mal tecleados usando el nombre del PDF."""
+    """Quita filas repetidas (resubidas del mismo PDF) y corrige títulos mal tecleados usando el nombre del PDF.
+
+    Una clave solo puede salir una vez. Entre filas con la misma clave se prefiere la que cuadra con su PDF (número
+    y recurso); si hay recursos distintos, las que no ganan se reubican en el número que dice su PDF cuando ese
+    número está libre en todo el listado (el título estaba mal) y, si no, se descartan avisando con detalle.
+    """
     por_clave: dict[str, list[Registro]] = {}
     for r in registros:
         por_clave.setdefault(r.clave(), []).append(r)
 
-    # 1) títulos equivocados: misma clave, distinto recurso → el que no cuadra con su PDF toma el nº del PDF
-    for clave, grupo in list(por_clave.items()):
-        if len(grupo) < 2 or len({g.r for g in grupo}) < 2:
-            continue
-        for g in list(grupo):
-            n_pdf = _num_pdf(g.pdf, anio)
-            if n_pdf and n_pdf != g.n:
-                nuevo = Registro(**{**g.__dict__, "n": n_pdf})
-                if nuevo.clave() not in por_clave or all(x.r == g.r for x in por_clave[nuevo.clave()]):
-                    log.info("título %r corregido a %s por el nombre del PDF %s", g.n, n_pdf, g.pdf)
-                    grupo.remove(g)
-                    por_clave.setdefault(nuevo.clave(), []).append(nuevo)
-        if not grupo:
-            del por_clave[clave]
-
-    # 2) resubidas: misma clave y mismo recurso → una sola (fecha más reciente, luego resubida más tardía)
-    salida: list[Registro] = []
-    for grupo in por_clave.values():
+    ocupadas = set(por_clave)          # claves presentes en el listado (para saber qué números del PDF están libres)
+    salida: dict[str, Registro] = {}
+    huerfanas: list[Registro] = []
+    for clave, grupo in por_clave.items():
         por_recurso: dict[Optional[str], list[Registro]] = {}
         for g in grupo:
             por_recurso.setdefault(g.r, []).append(g)
+        candidatas: list[Registro] = []
         for lote in por_recurso.values():
+            # resubidas del mismo PDF: gana la que cuadra con su nombre de fichero, luego la fecha y la resubida más tardía
+            lote.sort(key=lambda x: (_coherencia(x, anio), x.f or "", _sufijo_resubida(x.pdf)), reverse=True)
             if len(lote) > 1:
-                lote.sort(key=lambda x: (x.f or "", _sufijo_resubida(x.pdf)), reverse=True)
-                log.info("duplicado %s (%d filas), me quedo con %s", lote[0].clave(), len(lote), lote[0].pdf)
-            salida.append(lote[0])
-        if len(por_recurso) > 1:
-            log.warning("clave repetida con recursos distintos y sin arreglo: %s", grupo[0].clave())
-    return salida
+                log.info("duplicado %s (%d filas), me quedo con %s", clave, len(lote), lote[0].pdf)
+            candidatas.append(lote[0])
+        candidatas.sort(key=lambda x: (_coherencia(x, anio), x.f or ""), reverse=True)
+        salida[clave] = candidatas[0]
+        huerfanas.extend(candidatas[1:])
+
+    for g in huerfanas:
+        n_pdf = _num_pdf(g.pdf, anio)
+        if g.k is None and n_pdf and n_pdf != g.n:
+            nuevo = Registro(**{**g.__dict__, "n": n_pdf})
+            if nuevo.clave() not in ocupadas:
+                log.info("título %r corregido a %s por el nombre del PDF %s", g.n, n_pdf, g.pdf)
+                ocupadas.add(nuevo.clave())
+                salida[nuevo.clave()] = nuevo
+                continue
+        log.warning("clave repetida con recursos distintos sin arreglo posible: %s; se descarta la fila con recurso %s y PDF %s",
+                    g.clave(), g.r, (g.pdf or "").rsplit("/", 1)[-1])
+    return list(salida.values())
 
 
 # ---------------------------------------------------------------- interfaz
