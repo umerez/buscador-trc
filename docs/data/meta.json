@@ -1,6 +1,6 @@
 {
- "actualizado": "2026-10-17T10:38:58+00:00",
- "total": 31273,
+ "actualizado": "2026-10-18T10:38:58+00:00",
+ "total": 31272,
  "tribunales": [
   {
    "id": "tacrc",
@@ -12,7 +12,7 @@
    "desde": 2011,
    "documento": "Resolución",
    "parcial": "El buscador oficial del TACRC exige una comprobación anti-robots que impide indexarlo. Este índice solo contiene las resoluciones cuyos PDF conservan los archivos públicos de la web (Wayback Machine y Common Crawl): número, recurso, fecha y enlace, sin sentido ni objeto. Para el resto, use el buscador oficial o el constructor de enlaces al PDF.",
-   "total": 2393,
+   "total": 2394,
    "anios": {
     "2011": 116,
     "2012": 265,
@@ -29,7 +29,7 @@
     "2023": 111,
     "2024": 77,
     "2025": 37,
-    "2026": 18
+    "2026": 19
    },
    "fichero": "data/tacrc.json"
   },
@@ -265,7 +265,7 @@
    "idioma": "es",
    "desde": 2015,
    "documento": "Resolución",
-   "total": 2523,
+   "total": 2521,
    "anios": {
     "2015": 33,
     "2016": 151,
@@ -278,7 +278,7 @@
     "2023": 225,
     "2024": 209,
     "2025": 298,
-    "2026": 242
+    "2026": 240
    },
    "fichero": "data/canarias.json"
   }
