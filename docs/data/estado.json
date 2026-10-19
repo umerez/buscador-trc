@@ -8,8 +8,8 @@
   },
   "error": null,
   "total": 5923,
-  "segundos": 365.5,
-  "fecha": "2026-10-18T10:36:15+00:00",
+  "segundos": 410.6,
+  "fecha": "2026-10-19T01:37:00+00:00",
   "avisos": 1,
   "avisos_detalle": [
    "madrid 2026: 6 día(s) con menos resoluciones que su contador tras repetir la lectura: 2026-01-15 (9/10), 2026-01-29 (8/9), 2026-04-23 (11/13), 2026-04-30 (10/11), 2026-09-03 (27/28), 2026-09-17 (17/18)"
@@ -24,8 +24,8 @@
   },
   "error": null,
   "total": 2246,
-  "segundos": 15.7,
-  "fecha": "2026-10-18T10:36:31+00:00"
+  "segundos": 17.2,
+  "fecha": "2026-10-19T01:37:17+00:00"
  },
  "andalucia": {
   "ok": true,
@@ -36,8 +36,8 @@
   },
   "error": null,
   "total": 6874,
-  "segundos": 34.9,
-  "fecha": "2026-10-18T10:37:06+00:00"
+  "segundos": 26.3,
+  "fecha": "2026-10-19T01:37:44+00:00"
  },
  "galicia": {
   "ok": true,
@@ -48,8 +48,8 @@
   },
   "error": null,
   "total": 1949,
-  "segundos": 0.9,
-  "fecha": "2026-10-18T10:37:07+00:00"
+  "segundos": 1.2,
+  "fecha": "2026-10-19T01:37:45+00:00"
  },
  "navarra": {
   "ok": true,
@@ -60,8 +60,8 @@
   },
   "error": null,
   "total": 1106,
-  "segundos": 6.0,
-  "fecha": "2026-10-18T10:37:13+00:00"
+  "segundos": 6.2,
+  "fecha": "2026-10-19T01:37:51+00:00"
  },
  "cataluna": {
   "ok": true,
@@ -72,8 +72,8 @@
   },
   "error": null,
   "total": 3638,
-  "segundos": 94.3,
-  "fecha": "2026-10-18T10:38:47+00:00",
+  "segundos": 102.2,
+  "fecha": "2026-10-19T01:39:33+00:00",
   "avisos": 1,
   "avisos_detalle": [
    "2026: el contador dice 394 y se han obtenido 391 registros únicos (números de resolución ausentes: [])"
@@ -88,8 +88,8 @@
   },
   "error": null,
   "total": 1961,
-  "segundos": 4.6,
-  "fecha": "2026-10-18T10:38:52+00:00"
+  "segundos": 4.0,
+  "fecha": "2026-10-19T01:39:37+00:00"
  },
  "oarc": {
   "ok": true,
@@ -100,8 +100,8 @@
   },
   "error": null,
   "total": 2660,
-  "segundos": 2.9,
-  "fecha": "2026-10-18T10:38:55+00:00"
+  "segundos": 8.8,
+  "fecha": "2026-10-19T01:39:46+00:00"
  },
  "canarias": {
   "ok": true,
@@ -113,7 +113,7 @@
   "error": null,
   "total": 2521,
   "segundos": 3.0,
-  "fecha": "2026-10-18T10:38:58+00:00"
+  "fecha": "2026-10-19T01:39:49+00:00"
  },
  "tacrc": {
   "ok": true,
@@ -124,7 +124,7 @@
   },
   "error": null,
   "total": 2394,
-  "segundos": 3.3,
-  "fecha": "2026-10-18T10:30:10+00:00"
+  "segundos": 3.5,
+  "fecha": "2026-10-19T01:30:10+00:00"
  }
 }
