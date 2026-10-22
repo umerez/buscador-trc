@@ -8,8 +8,8 @@
   },
   "error": null,
   "total": 5923,
-  "segundos": 441.8,
-  "fecha": "2026-10-21T01:37:34+00:00",
+  "segundos": 437.2,
+  "fecha": "2026-10-22T01:37:27+00:00",
   "avisos": 1,
   "avisos_detalle": [
    "madrid 2026: 6 día(s) con menos resoluciones que su contador tras repetir la lectura: 2026-01-15 (9/10), 2026-01-29 (8/9), 2026-04-23 (11/13), 2026-04-30 (10/11), 2026-09-03 (27/28), 2026-09-17 (17/18)"
@@ -24,8 +24,8 @@
   },
   "error": null,
   "total": 2246,
-  "segundos": 18.0,
-  "fecha": "2026-10-21T01:37:52+00:00"
+  "segundos": 17.6,
+  "fecha": "2026-10-22T01:37:45+00:00"
  },
  "andalucia": {
   "ok": true,
@@ -36,8 +36,8 @@
   },
   "error": null,
   "total": 6874,
-  "segundos": 31.5,
-  "fecha": "2026-10-21T01:38:23+00:00"
+  "segundos": 24.5,
+  "fecha": "2026-10-22T01:38:09+00:00"
  },
  "galicia": {
   "ok": true,
@@ -49,7 +49,7 @@
   "error": null,
   "total": 1949,
   "segundos": 0.9,
-  "fecha": "2026-10-21T01:38:24+00:00"
+  "fecha": "2026-10-22T01:38:10+00:00"
  },
  "navarra": {
   "ok": true,
@@ -60,23 +60,23 @@
   },
   "error": null,
   "total": 1107,
-  "segundos": 9.2,
-  "fecha": "2026-10-21T01:38:34+00:00"
+  "segundos": 7.3,
+  "fecha": "2026-10-22T01:38:17+00:00"
  },
  "cataluna": {
   "ok": true,
   "anios": {
    "2026": {
-    "registros": 391
+    "registros": 389
    }
   },
   "error": null,
-  "total": 3638,
-  "segundos": 105.9,
-  "fecha": "2026-10-21T01:40:19+00:00",
+  "total": 3636,
+  "segundos": 108.2,
+  "fecha": "2026-10-22T01:40:06+00:00",
   "avisos": 1,
   "avisos_detalle": [
-   "2026: el contador dice 394 y se han obtenido 391 registros únicos (números de resolución ausentes: [])"
+   "2026: el contador dice 398 y se han obtenido 389 registros únicos (números de resolución ausentes: [])"
   ]
  },
  "aragon": {
@@ -88,36 +88,32 @@
   },
   "error": null,
   "total": 1963,
-  "segundos": 6.3,
-  "fecha": "2026-10-21T01:40:26+00:00"
+  "segundos": 6.6,
+  "fecha": "2026-10-22T01:40:12+00:00"
  },
  "oarc": {
   "ok": true,
   "anios": {
    "2026": {
-    "registros": 146
+    "registros": 164
    }
   },
   "error": null,
-  "total": 2651,
-  "segundos": 194.4,
-  "fecha": "2026-10-21T01:43:40+00:00",
-  "avisos": 1,
-  "avisos_detalle": [
-   "OARC: sin JSON anual de 2026 (Sin respuesta de https://www.contratacion.euskadi.eus/webkpe00-kpeoarc/es/y96aResolucionesWar/busqueda/buscarListado?anio=2026&idSubcriterio=: HTTPSConnectionPool(host='www.contratacion.eusk"
-  ]
+  "total": 2669,
+  "segundos": 2.3,
+  "fecha": "2026-10-22T01:40:15+00:00"
  },
  "canarias": {
   "ok": true,
   "anios": {
    "2026": {
-    "registros": 242
+    "registros": 243
    }
   },
   "error": null,
-  "total": 2523,
-  "segundos": 3.1,
-  "fecha": "2026-10-21T01:43:43+00:00"
+  "total": 2524,
+  "segundos": 2.7,
+  "fecha": "2026-10-22T01:40:17+00:00"
  },
  "tacrc": {
   "ok": true,
@@ -128,7 +124,7 @@
   },
   "error": null,
   "total": 2394,
-  "segundos": 5.6,
-  "fecha": "2026-10-21T01:30:12+00:00"
+  "segundos": 3.7,
+  "fecha": "2026-10-22T01:30:10+00:00"
  }
 }
