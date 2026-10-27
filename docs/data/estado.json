@@ -8,8 +8,8 @@
   },
   "error": null,
   "total": 5923,
-  "segundos": 433.2,
-  "fecha": "2026-10-26T02:37:24+00:00",
+  "segundos": 412.9,
+  "fecha": "2026-10-27T02:37:04+00:00",
   "avisos": 1,
   "avisos_detalle": [
    "madrid 2026: 6 día(s) con menos resoluciones que su contador tras repetir la lectura: 2026-01-15 (9/10), 2026-01-29 (8/9), 2026-04-23 (11/13), 2026-04-30 (10/11), 2026-09-03 (27/28), 2026-09-17 (17/18)"
@@ -24,20 +24,20 @@
   },
   "error": null,
   "total": 2247,
-  "segundos": 17.4,
-  "fecha": "2026-10-26T02:37:42+00:00"
+  "segundos": 17.6,
+  "fecha": "2026-10-27T02:37:22+00:00"
  },
  "andalucia": {
   "ok": true,
   "anios": {
    "2026": {
-    "registros": 662
+    "registros": 669
    }
   },
   "error": null,
-  "total": 6880,
-  "segundos": 34.2,
-  "fecha": "2026-10-26T02:38:16+00:00"
+  "total": 6887,
+  "segundos": 34.5,
+  "fecha": "2026-10-27T02:37:56+00:00"
  },
  "galicia": {
   "ok": true,
@@ -49,7 +49,7 @@
   "error": null,
   "total": 1964,
   "segundos": 0.9,
-  "fecha": "2026-10-26T02:38:17+00:00"
+  "fecha": "2026-10-27T02:37:57+00:00"
  },
  "navarra": {
   "ok": true,
@@ -60,8 +60,8 @@
   },
   "error": null,
   "total": 1109,
-  "segundos": 6.0,
-  "fecha": "2026-10-26T02:38:23+00:00"
+  "segundos": 3.9,
+  "fecha": "2026-10-27T02:38:01+00:00"
  },
  "cataluna": {
   "ok": true,
@@ -72,28 +72,24 @@
   },
   "error": null,
   "total": 3636,
-  "segundos": 113.4,
-  "fecha": "2026-10-26T02:40:16+00:00",
+  "segundos": 204.7,
+  "fecha": "2026-10-27T02:41:26+00:00",
   "avisos": 1,
   "avisos_detalle": [
    "2026: el contador dice 398 y se han obtenido 389 registros únicos (números de resolución ausentes: [])"
   ]
  },
  "aragon": {
-  "ok": false,
+  "ok": true,
   "anios": {
    "2026": {
-    "error": "Sin respuesta de https://gd.aragon.es/cgi-bin/ACTA/BRSCGI: HTTPSConnectionPool(host='gd.aragon.es', port=443): Max retries exceeded with url: /cgi-bin/ACTA/BRSCGI?CMD=VERLST&BASE=ACTA&DOCS=1-100&SEC=ACTA_PUBL&SORT=%40FEPU&SEPARADOR=&%40FERE-GE=20260101&%40FERE-LE=20261231 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))"
+    "registros": 201
    }
   },
-  "error": "2026: Sin respuesta de https://gd.aragon.es/cgi-bin/ACTA/BRSCGI: HTTPSConnectionPool(host='gd.aragon.es', port=443): Max retries exceeded with url: /cgi-bin/ACTA/BRSCGI?CMD=VERLST&BASE=ACTA&DOCS=1-100&SEC=ACTA_PUBL&SORT=%40FEPU&SEPARADOR=&%40FERE-GE=20260101&%40FERE-LE=20261231 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
-  "total": 1963,
-  "segundos": 12.7,
-  "fecha": "2026-10-26T02:40:29+00:00",
-  "avisos": 1,
-  "avisos_detalle": [
-   "aragon 2026: Sin respuesta de https://gd.aragon.es/cgi-bin/ACTA/BRSCGI: HTTPSConnectionPool(host='gd.aragon.es', port=443): Max retries exceeded with url: /cgi-bin/ACTA/BRSCGI?CMD=VERLST&BASE=ACTA&DOCS=1-100&SEC=ACTA_PUB"
-  ]
+  "error": null,
+  "total": 1968,
+  "segundos": 4.9,
+  "fecha": "2026-10-27T02:41:31+00:00"
  },
  "oarc": {
   "ok": true,
@@ -104,20 +100,20 @@
   },
   "error": null,
   "total": 2674,
-  "segundos": 2.5,
-  "fecha": "2026-10-26T02:40:32+00:00"
+  "segundos": 3.2,
+  "fecha": "2026-10-27T02:41:34+00:00"
  },
  "canarias": {
   "ok": true,
   "anios": {
    "2026": {
-    "registros": 243
+    "registros": 242
    }
   },
   "error": null,
-  "total": 2524,
+  "total": 2523,
   "segundos": 2.8,
-  "fecha": "2026-10-26T02:40:34+00:00"
+  "fecha": "2026-10-27T02:41:37+00:00"
  },
  "tacrc": {
   "ok": true,
@@ -128,7 +124,7 @@
   },
   "error": null,
   "total": 2394,
-  "segundos": 4.9,
-  "fecha": "2026-10-26T02:30:11+00:00"
+  "segundos": 4.6,
+  "fecha": "2026-10-27T02:30:11+00:00"
  }
 }
