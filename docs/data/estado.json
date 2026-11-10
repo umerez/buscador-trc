@@ -8,8 +8,8 @@
   },
   "error": null,
   "total": 5947,
-  "segundos": 438.9,
-  "fecha": "2026-11-09T02:37:33+00:00",
+  "segundos": 440.8,
+  "fecha": "2026-11-10T02:37:32+00:00",
   "avisos": 1,
   "avisos_detalle": [
    "madrid 2026: 6 día(s) con menos resoluciones que su contador tras repetir la lectura: 2026-01-15 (9/10), 2026-01-29 (8/9), 2026-04-23 (11/13), 2026-04-30 (10/11), 2026-09-03 (27/28), 2026-09-17 (17/18)"
@@ -24,20 +24,20 @@
   },
   "error": null,
   "total": 2253,
-  "segundos": 21.2,
-  "fecha": "2026-11-09T02:37:54+00:00"
+  "segundos": 18.5,
+  "fecha": "2026-11-10T02:37:51+00:00"
  },
  "andalucia": {
   "ok": true,
   "anios": {
    "2026": {
-    "registros": 703
+    "registros": 707
    }
   },
   "error": null,
-  "total": 6921,
-  "segundos": 27.8,
-  "fecha": "2026-11-09T02:38:22+00:00"
+  "total": 6925,
+  "segundos": 36.1,
+  "fecha": "2026-11-10T02:38:27+00:00"
  },
  "galicia": {
   "ok": true,
@@ -49,7 +49,7 @@
   "error": null,
   "total": 1964,
   "segundos": 1.1,
-  "fecha": "2026-11-09T02:38:23+00:00"
+  "fecha": "2026-11-10T02:38:28+00:00"
  },
  "navarra": {
   "ok": true,
@@ -60,8 +60,8 @@
   },
   "error": null,
   "total": 1110,
-  "segundos": 4.8,
-  "fecha": "2026-11-09T02:38:28+00:00"
+  "segundos": 6.3,
+  "fecha": "2026-11-10T02:38:34+00:00"
  },
  "cataluna": {
   "ok": true,
@@ -72,8 +72,8 @@
   },
   "error": null,
   "total": 3664,
-  "segundos": 114.8,
-  "fecha": "2026-11-09T02:40:23+00:00",
+  "segundos": 128.2,
+  "fecha": "2026-11-10T02:40:43+00:00",
   "avisos": 1,
   "avisos_detalle": [
    "2026: el contador dice 422 y se han obtenido 417 registros únicos (números de resolución ausentes: [])"
@@ -88,8 +88,8 @@
   },
   "error": null,
   "total": 1973,
-  "segundos": 4.5,
-  "fecha": "2026-11-09T02:40:27+00:00"
+  "segundos": 5.8,
+  "fecha": "2026-11-10T02:40:48+00:00"
  },
  "oarc": {
   "ok": true,
@@ -100,20 +100,20 @@
   },
   "error": null,
   "total": 2691,
-  "segundos": 3.0,
-  "fecha": "2026-11-09T02:40:30+00:00"
+  "segundos": 2.5,
+  "fecha": "2026-11-10T02:40:51+00:00"
  },
  "canarias": {
   "ok": true,
   "anios": {
    "2026": {
-    "registros": 261
+    "registros": 259
    }
   },
   "error": null,
-  "total": 2542,
-  "segundos": 3.2,
-  "fecha": "2026-11-09T02:40:33+00:00"
+  "total": 2540,
+  "segundos": 2.9,
+  "fecha": "2026-11-10T02:40:54+00:00"
  },
  "tacrc": {
   "ok": true,
@@ -124,7 +124,7 @@
   },
   "error": null,
   "total": 2395,
-  "segundos": 7.7,
-  "fecha": "2026-11-09T02:30:14+00:00"
+  "segundos": 5.2,
+  "fecha": "2026-11-10T02:30:12+00:00"
  }
 }
