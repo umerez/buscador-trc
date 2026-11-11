@@ -1,6 +1,6 @@
 {
- "actualizado": "2026-11-10T02:40:54+00:00",
- "total": 31462,
+ "actualizado": "2026-11-11T02:44:34+00:00",
+ "total": 31479,
  "tribunales": [
   {
    "id": "tacrc",
@@ -12,7 +12,7 @@
    "desde": 2011,
    "documento": "Resolución",
    "parcial": "El buscador oficial del TACRC exige una comprobación anti-robots que impide indexarlo. Este índice solo contiene las resoluciones cuyos PDF conservan los archivos públicos de la web (Wayback Machine y Common Crawl): número, recurso, fecha y enlace, sin sentido ni objeto. Para el resto, use el buscador oficial o el constructor de enlaces al PDF.",
-   "total": 2395,
+   "total": 2398,
    "anios": {
     "2011": 116,
     "2012": 265,
@@ -29,7 +29,7 @@
     "2023": 111,
     "2024": 77,
     "2025": 37,
-    "2026": 20
+    "2026": 23
    },
    "fichero": "data/tacrc.json"
   },
@@ -182,7 +182,7 @@
    "idioma": "ca",
    "desde": 2017,
    "documento": "Resolució",
-   "total": 3664,
+   "total": 3674,
    "anios": {
     "2017": 184,
     "2018": 288,
@@ -192,7 +192,7 @@
     "2023": 626,
     "2024": 487,
     "2025": 542,
-    "2026": 417
+    "2026": 427
    },
    "fichero": "data/cataluna.json"
   },
@@ -205,7 +205,7 @@
    "idioma": "es",
    "desde": 2011,
    "documento": "Acuerdo",
-   "total": 1973,
+   "total": 1976,
    "anios": {
     "2011": 32,
     "2012": 59,
@@ -222,7 +222,7 @@
     "2023": 132,
     "2024": 159,
     "2025": 222,
-    "2026": 206
+    "2026": 209
    },
    "fichero": "data/aragon.json"
   },
@@ -265,7 +265,7 @@
    "idioma": "es",
    "desde": 2015,
    "documento": "Resolución",
-   "total": 2540,
+   "total": 2541,
    "anios": {
     "2015": 33,
     "2016": 151,
@@ -278,7 +278,7 @@
     "2023": 225,
     "2024": 209,
     "2025": 298,
-    "2026": 259
+    "2026": 260
    },
    "fichero": "data/canarias.json"
   }
