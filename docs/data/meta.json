@@ -1,6 +1,6 @@
 {
- "actualizado": "2026-11-13T02:41:05+00:00",
- "total": 31503,
+ "actualizado": "2026-11-14T02:41:07+00:00",
+ "total": 31512,
  "tribunales": [
   {
    "id": "tacrc",
@@ -101,7 +101,7 @@
    "idioma": "es",
    "desde": 2011,
    "documento": "Resolución",
-   "total": 6933,
+   "total": 6941,
    "anios": {
     "2011": 1,
     "2012": 123,
@@ -118,7 +118,7 @@
     "2023": 645,
     "2024": 669,
     "2025": 794,
-    "2026": 713
+    "2026": 721
    },
    "fichero": "data/andalucia.json"
   },
@@ -265,7 +265,7 @@
    "idioma": "es",
    "desde": 2015,
    "documento": "Resolución",
-   "total": 2550,
+   "total": 2551,
    "anios": {
     "2015": 33,
     "2016": 151,
@@ -278,7 +278,7 @@
     "2023": 225,
     "2024": 209,
     "2025": 298,
-    "2026": 269
+    "2026": 270
    },
    "fichero": "data/canarias.json"
   }
