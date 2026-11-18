@@ -1,6 +1,6 @@
 {
- "actualizado": "2026-11-17T02:41:11+00:00",
- "total": 31510,
+ "actualizado": "2026-11-18T02:44:20+00:00",
+ "total": 31529,
  "tribunales": [
   {
    "id": "tacrc",
@@ -154,7 +154,7 @@
    "idioma": "es",
    "desde": 2013,
    "documento": "Acuerdo",
-   "total": 1111,
+   "total": 1112,
    "anios": {
     "2013": 26,
     "2014": 32,
@@ -169,7 +169,7 @@
     "2023": 92,
     "2024": 70,
     "2025": 103,
-    "2026": 106
+    "2026": 107
    },
    "fichero": "data/navarra.json"
   },
@@ -182,7 +182,7 @@
    "idioma": "ca",
    "desde": 2017,
    "documento": "Resolució",
-   "total": 3678,
+   "total": 3694,
    "anios": {
     "2017": 184,
     "2018": 288,
@@ -192,7 +192,7 @@
     "2023": 626,
     "2024": 487,
     "2025": 542,
-    "2026": 431
+    "2026": 447
    },
    "fichero": "data/cataluna.json"
   },
@@ -265,7 +265,7 @@
    "idioma": "es",
    "desde": 2015,
    "documento": "Resolución",
-   "total": 2549,
+   "total": 2551,
    "anios": {
     "2015": 33,
     "2016": 151,
@@ -278,7 +278,7 @@
     "2023": 225,
     "2024": 209,
     "2025": 298,
-    "2026": 268
+    "2026": 270
    },
    "fichero": "data/canarias.json"
   }
