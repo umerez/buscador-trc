@@ -1,6 +1,6 @@
 {
- "actualizado": "2026-11-18T02:44:20+00:00",
- "total": 31529,
+ "actualizado": "2026-11-19T02:45:05+00:00",
+ "total": 31585,
  "tribunales": [
   {
    "id": "tacrc",
@@ -42,7 +42,7 @@
    "idioma": "es",
    "desde": 2011,
    "documento": "Resolución",
-   "total": 5947,
+   "total": 5994,
    "anios": {
     "2011": 92,
     "2012": 158,
@@ -59,7 +59,7 @@
     "2023": 446,
     "2024": 488,
     "2025": 542,
-    "2026": 502
+    "2026": 549
    },
    "fichero": "data/madrid.json"
   },
@@ -101,7 +101,7 @@
    "idioma": "es",
    "desde": 2011,
    "documento": "Resolución",
-   "total": 6941,
+   "total": 6948,
    "anios": {
     "2011": 1,
     "2012": 123,
@@ -118,7 +118,7 @@
     "2023": 645,
     "2024": 669,
     "2025": 794,
-    "2026": 721
+    "2026": 728
    },
    "fichero": "data/andalucia.json"
   },
@@ -205,7 +205,7 @@
    "idioma": "es",
    "desde": 2011,
    "documento": "Acuerdo",
-   "total": 1978,
+   "total": 1981,
    "anios": {
     "2011": 32,
     "2012": 59,
@@ -222,7 +222,7 @@
     "2023": 132,
     "2024": 159,
     "2025": 222,
-    "2026": 211
+    "2026": 214
    },
    "fichero": "data/aragon.json"
   },
@@ -265,7 +265,7 @@
    "idioma": "es",
    "desde": 2015,
    "documento": "Resolución",
-   "total": 2551,
+   "total": 2550,
    "anios": {
     "2015": 33,
     "2016": 151,
@@ -278,7 +278,7 @@
     "2023": 225,
     "2024": 209,
     "2025": 298,
-    "2026": 270
+    "2026": 269
    },
    "fichero": "data/canarias.json"
   }
