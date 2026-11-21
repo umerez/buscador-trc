@@ -8,8 +8,8 @@
   },
   "error": null,
   "total": 5994,
-  "segundos": 428.3,
-  "fecha": "2026-11-20T02:37:26+00:00",
+  "segundos": 422.5,
+  "fecha": "2026-11-21T02:37:10+00:00",
   "avisos": 2,
   "avisos_detalle": [
    "madrid 2026: 6 día(s) con menos resoluciones que su contador tras repetir la lectura: 2026-01-15 (9/10), 2026-01-29 (8/9), 2026-04-23 (11/13), 2026-04-30 (10/11), 2026-09-03 (27/28), 2026-09-17 (17/18)",
@@ -25,8 +25,8 @@
   },
   "error": null,
   "total": 2253,
-  "segundos": 18.1,
-  "fecha": "2026-11-20T02:37:44+00:00"
+  "segundos": 18.6,
+  "fecha": "2026-11-21T02:37:29+00:00"
  },
  "andalucia": {
   "ok": true,
@@ -37,24 +37,20 @@
   },
   "error": null,
   "total": 6948,
-  "segundos": 41.9,
-  "fecha": "2026-11-20T02:38:26+00:00"
+  "segundos": 46.1,
+  "fecha": "2026-11-21T02:38:15+00:00"
  },
  "galicia": {
-  "ok": false,
+  "ok": true,
   "anios": {
    "2026": {
-    "error": "Sin respuesta de https://tacgal.xunta.gal/sixtacweb/resolucions/: HTTPSConnectionPool(host='tacgal.xunta.gal', port=443): Max retries exceeded with url: /sixtacweb/resolucions/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='tacgal.xunta.gal', port=443) at 0x107b7e430>, 'Connection to tacgal.xunta.gal timed out. (connect timeout=60)'))"
+    "registros": 177
    }
   },
-  "error": "2026: Sin respuesta de https://tacgal.xunta.gal/sixtacweb/resolucions/: HTTPSConnectionPool(host='tacgal.xunta.gal', port=443): Max retries exceeded with url: /sixtacweb/resolucions/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='tacgal.xunta.gal', port=443) at 0x107b7e430>, 'Connection to tacgal.xunta.gal timed out. (connect timeout=60)'))",
-  "total": 1964,
-  "segundos": 161.9,
-  "fecha": "2026-11-20T02:41:08+00:00",
-  "avisos": 1,
-  "avisos_detalle": [
-   "galicia 2026: Sin respuesta de https://tacgal.xunta.gal/sixtacweb/resolucions/: HTTPSConnectionPool(host='tacgal.xunta.gal', port=443): Max retries exceeded with url: /sixtacweb/resolucions/ (Caused by ConnectTimeoutErro"
-  ]
+  "error": null,
+  "total": 1984,
+  "segundos": 1.0,
+  "fecha": "2026-11-21T02:38:16+00:00"
  },
  "navarra": {
   "ok": true,
@@ -65,8 +61,8 @@
   },
   "error": null,
   "total": 1113,
-  "segundos": 173.0,
-  "fecha": "2026-11-20T02:44:01+00:00"
+  "segundos": 7.4,
+  "fecha": "2026-11-21T02:38:23+00:00"
  },
  "cataluna": {
   "ok": true,
@@ -77,8 +73,8 @@
   },
   "error": null,
   "total": 3694,
-  "segundos": 119.9,
-  "fecha": "2026-11-20T02:46:01+00:00",
+  "segundos": 126.4,
+  "fecha": "2026-11-21T02:40:29+00:00",
   "avisos": 1,
   "avisos_detalle": [
    "2026: el contador dice 452 y se han obtenido 447 registros únicos (números de resolución ausentes: [])"
@@ -93,8 +89,8 @@
   },
   "error": null,
   "total": 1981,
-  "segundos": 13.3,
-  "fecha": "2026-11-20T02:46:14+00:00"
+  "segundos": 16.6,
+  "fecha": "2026-11-21T02:40:46+00:00"
  },
  "oarc": {
   "ok": true,
@@ -105,20 +101,20 @@
   },
   "error": null,
   "total": 2691,
-  "segundos": 2.4,
-  "fecha": "2026-11-20T02:46:16+00:00"
+  "segundos": 3.0,
+  "fecha": "2026-11-21T02:40:49+00:00"
  },
  "canarias": {
   "ok": true,
   "anios": {
    "2026": {
-    "registros": 271
+    "registros": 270
    }
   },
   "error": null,
-  "total": 2552,
-  "segundos": 2.3,
-  "fecha": "2026-11-20T02:46:19+00:00"
+  "total": 2551,
+  "segundos": 3.0,
+  "fecha": "2026-11-21T02:40:52+00:00"
  },
  "tacrc": {
   "ok": true,
@@ -129,7 +125,7 @@
   },
   "error": null,
   "total": 2398,
-  "segundos": 12.8,
-  "fecha": "2026-11-20T02:30:17+00:00"
+  "segundos": 4.7,
+  "fecha": "2026-11-21T02:30:07+00:00"
  }
 }
