@@ -1,6 +1,6 @@
 {
- "actualizado": "2026-11-21T02:40:52+00:00",
- "total": 31607,
+ "actualizado": "2026-11-22T02:41:22+00:00",
+ "total": 31608,
  "tribunales": [
   {
    "id": "tacrc",
@@ -265,7 +265,7 @@
    "idioma": "es",
    "desde": 2015,
    "documento": "Resolución",
-   "total": 2551,
+   "total": 2552,
    "anios": {
     "2015": 33,
     "2016": 151,
@@ -278,7 +278,7 @@
     "2023": 225,
     "2024": 209,
     "2025": 298,
-    "2026": 270
+    "2026": 271
    },
    "fichero": "data/canarias.json"
   }
